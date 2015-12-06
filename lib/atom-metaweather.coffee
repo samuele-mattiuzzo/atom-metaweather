@@ -7,14 +7,15 @@ class Metaweather
   # Private: Default configuration.
   config:
     location:
-      type: 'string'
-      default: '44418'
+      type: 'integer'
+      default: 44418
     locationName:
       type: 'string'
       default: 'London'
     updateTime:
-      type: 'string'
-      default: '300'
+      type: 'integer'
+      default: 300
+      minimum: 60
     position:
       type: 'string'
       default: 'right'
@@ -29,6 +30,9 @@ class Metaweather
       type: 'boolean'
       default: false
     showHumidity:
+      type: 'boolean'
+      default: false
+    showPredictability:
       type: 'boolean'
       default: false
 

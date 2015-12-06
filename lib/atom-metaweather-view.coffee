@@ -1,4 +1,5 @@
 request = require('request')
+Format = require './atom-metaweather-format'
 
 class MetaweatherView extends HTMLElement
   url: "https://www.metaweather.com/api/location"
@@ -11,8 +12,10 @@ class MetaweatherView extends HTMLElement
   showTemperature: true
   showWind: false
   showHumidity: false
+  format: null
 
   initialize: (@statusBar) ->
+    @format = Format
     @classList.add('atom-metaweather', 'inline-block')
     # TODO: style it
     @content = document.createElement('div')
@@ -44,72 +47,45 @@ class MetaweatherView extends HTMLElement
       @todayDate = "#{ yyyy }/#{ mm }/#{ dd }"
       @tomorrowDate = "#{ yyyy }/#{ mm }/#{ dd+1 }"
 
-  getLocationData: ->
+  _getLocationData: ->
     if !@locationName?
+      @locationName = '-'
       # get from locationUrl
-      locationUrl = "#{ @url }/#{ @locationWoeid }/"
-      request.get { uri:locationUrl, json: true }, (_, r, body) ->
-        if r.statusCode == 200
-          @locationName = body['title']
-        else
-          console.log(r.statusMessage)
-          @locationName = '-'
+      locationUrl =
+      request.get { uri:"#{ @url }/#{ @locationWoeid }/", json: true },
+        (_, r, body) ->
+          if r.statusCode == 200
+            @locationName = body['title']
+          else
+            console.log(r.statusMessage)
 
-  getLatestWeatherInfo: (date) ->
+  _formatOutput: (data) ->
       # creates the output string
-      latest = date[0]
-      result = ""
-      # temperature?
-      if @showTemperature
-        result += " #{ parseInt(latest['the_temp']) }C"
-        # glyph
-        # TODO: map glyphs to weather_state_name
-        glyph = latest['weather_state_name']
-      # wind?
-      if @showWind
-        result += " #{ parseInt(latest['wind_speed']) } #{ latest['wind_direction_compass'] }"
-      # humidity?
-      if @showHumidity
-        result += " #{ parseInt(atest['humidity']) }%"
-      # indicator
-      # TODO: style it as bars ||| red1, yellow2, green3 (glyph?)
-      p = parseInt(latest['predictability'])
-      result += " #{ p }%"
+      f = new @format(data[0], this)
+      f.get()
 
-  getApiData: ->
+  _getApiData: ->
       # selects the correct url based on date and cycle setting
-      getUrl = "#{ @url }/#{ @locationWoeid }/#{ @todayDate }/"
-      if @cycleDates
-        if @showTomorrow
-          getUrl = "#{ @url }/#{ @locationWoeid }/#{ @tomorrowDate }/"
+      getDate = if @cycleDates and @showTomorrow then @tomorrowDate else @todayDate
+      [resp, data, self] = ['-', '-', this]
+      request.get { uri:"#{ @url }/#{ @locationWoeid }/#{ getDate }/", json: true },
+        (_, r, body) ->
+          if r.statusCode == 200
+            # success
+            data = self._formatOutput body
+          else
+            # TODO: better logging report to user
+            console.log(r.statusMessage)
+          self._writeData(data)
 
-      [resp, result] = ['-', '-']
-      self = this
-      request.get { uri:getUrl, json: true }, (_, r, body) ->
-        resp = r.statusCode
-        if resp == 200
-          # success
-          result = self.getLatestWeatherInfo body
-        else
-          # TODO: better logging report to user
-          console.log(resp)
-          console.log(r.statusMessage)
-        self.writeApiData(resp, result)
-
-  writeApiData: (r, data)->
-      # composes the final message and writes it in the status bar
-      day = ''
-      if @locationName != '-'
-        day = if not @showTomorrow then ' today' else ' tomorrow'
-      resp = if r == 200 then '' else "(#{ r })"
-
+  _writeData: (data)->
       @showTomorrow = if @cycleDates then !@showTomorrow else @showTomorrow
-      @content.innerHTML = "#{ @locationName }#{ day }: #{ data }#{ resp }"
+      @content.innerHTML = data
 
   # Public: Updates the indicator.
   update: ->
     if @locationWoeid?
-      @getApiData()
+      @_getApiData()
 
   # Tear down any state and detach
   destroy: ->
