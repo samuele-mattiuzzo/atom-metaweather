@@ -1,5 +1,5 @@
 # Atom Metaweather [![Build Status](https://travis-ci.org/samuele-mattiuzzo/atom-metaweather.svg?branch=master)](https://travis-ci.org/samuele-mattiuzzo/atom-metaweather)
-
+[![Version](https://badge.fury.io/gh/samuele-mattiuzzo%2Fatom-metaweather.svg)](https://badge.fury.io/gh/samuele-mattiuzzo%2Fatom-metaweather)
 Atom Metaweather is a status bar plugin for [Atom](http://atom.io) editor that displays weather information for today and tomorrow
 and uses [metaweather.com](https://www.metaweather.com) API data.
 
