@@ -1,7 +1,7 @@
 {
   "name": "atom-metaweather",
   "main": "./lib/atom-metaweather",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Gathers weather information from metaweather.com",
   "keywords": [
       "weather",
