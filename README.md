@@ -4,12 +4,13 @@ Atom Metaweather is a status bar plugin for [Atom](http://atom.io) editor that d
 and uses [metaweather.com](https://www.metaweather.com) API data.
 
 Status bar with all elements:
+
 ![Atom Metaweather 0.1.6 in action](https://github.com/samuele-mattiuzzo/atom-metaweather/blob/master/screenshot.png?raw=true)
 
 
 ## Configuration
 
-* `location` &mdash; WOEID of the location (see [next section](#woied-help))
+* `location` &mdash; WOEID of the location (see [next section](#Get WOEID value from metaweather.com))
 * `locationName` &mdash; Name of the location (leave blank to fetch from API)
 * `showTemperature` &mdash; Shows temperature indicator [`true`, `false`]
 * `showWind` &mdash; Shows winds indicator [`true`, `false`]
