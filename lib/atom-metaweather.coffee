@@ -11,10 +11,10 @@ class Metaweather
       default: 44418
     locationName:
       type: 'string'
-      default: 'London'
+      default: null
     updateTime:
       type: 'integer'
-      default: 300
+      default: 150
       minimum: 60
     position:
       type: 'string'
