@@ -33,11 +33,11 @@ class MetaweatherView extends HTMLElement
       # reads all the settings
       # TODO: implement smart logic to fetch location data from API
       @locationWoeid = atom.config.get('atom-metaweather.location')
-      @locationName = atom.config.get('atom-metaweather.locationName')
       @cycleDates = atom.config.get('atom-metaweather.cycleDates')
       @showTemperature = atom.config.get('atom-metaweather.showTemperature')
       @showHumidity = atom.config.get('atom-metaweather.showHumidity')
       @showWind = atom.config.get('atom-metaweather.showWind')
+      @_getLocationData()
 
       td = new Date()
       dd = td.getDate()
@@ -48,16 +48,17 @@ class MetaweatherView extends HTMLElement
       @tomorrowDate = "#{ yyyy }/#{ mm }/#{ dd+1 }"
 
   _getLocationData: ->
-    if !@locationName?
-      @locationName = '-'
-      # get from locationUrl
-      locationUrl =
+    loc = atom.config.get('atom-metaweather.locationName')
+    if !loc?
+      # get from api
       request.get { uri:"#{ @url }/#{ @locationWoeid }/", json: true },
         (_, r, body) ->
           if r.statusCode == 200
-            @locationName = body['title']
+            body['title']
           else
             console.log(r.statusMessage)
+            null
+    @locationName = loc
 
   _formatOutput: (data) ->
       # creates the output string
