@@ -67,7 +67,7 @@ class Metaweather
   # Private: Creates the set of event observers.
   observeEvents: ->
     @subscriptions = new CompositeDisposable
-    @subscriptions.add atom.config.onDidChange 'atom-metaweather.position', =>
+    @subscriptions.add atom.config.onDidChange =>
       @destroyTile()
       @updateTile()
 
