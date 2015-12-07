@@ -12,15 +12,16 @@ Status bar with all elements:
 
 ## Configuration
 
-* `location` &mdash; WOEID of the location (see [next section](#Get WOEID value from metaweather.com))
-* `locationName` &mdash; Name of the location (leave blank to fetch from API)
-* `showTemperature` &mdash; Shows temperature indicator [`true`, `false`]
-* `showWind` &mdash; Shows winds indicator [`true`, `false`]
-* `showHumidity` &mdash; Shows humidity indicator [`true`, `false`]
-* `showPredictability` &mdash; Shows validity of prediction indicator [`true`, `false`]
-* `position` &mdash; Control the placement of the indicator [`left`, `right`]
-* `updateTime` &mdash; Control the refresh time (150s default)
-* `cycleDates` &mdash; Cycle through today/tomorrow (default `true`)
+* `location` &mdash; WOEID of the location (see [next section](#Get WOEID value from metaweather.com)). Leave blank to automatically fetch from the user's current location
+* `locationName` &mdash; Name of the location. Leave blank to automatically fetch from API
+* `showTemperature` &mdash; Shows the temperature meter [`true`, `false`]
+* `showWeatherIcon` &mdash; Shows the weather state icon [`true`, `false`]
+* `showWind` &mdash; Shows the wind speed meter [`true`, `false`]
+* `showHumidity` &mdash; Shows the humidity meter [`true`, `false`]
+* `showPredictability` &mdash; Shows an indicator for the validity of a prediction (red=bad, yellow=average, green=good)[`true`, `false`]
+* `position` &mdash; Control the placement of the meters [`left`, `right`]
+* `cycleDates` &mdash; Allow cycling through today/tomorrow (default `true`)
+* `updateTime` &mdash; Control the refresh time in seconds between today and tomorrow dates cycle (default `60`)
 
 
 ### Get WOEID value from metaweather.com
@@ -31,6 +32,11 @@ To get your city's number, visit https://www.metaweather.com/api/#locationsearch
 - the API response will give you the WOEID number `44418`
 - open atom-metaweather settings and add the WOEID number
 - [optional] you can use the `title` response field to populate locationName
+
+
+## Credits
+
+All weather data and icons are taken from [metaweather.com](https://www.metaweather.com)
 
 
 ## Copyright
