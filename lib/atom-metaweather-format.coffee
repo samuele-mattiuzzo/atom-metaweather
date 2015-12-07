@@ -48,7 +48,7 @@ class Format
       prd = parseInt(@data['predictability'])
       if prd <= 33
           prdClass = 'bad'
-      else if prd > 66
+      else if prd > 70
           prdClass = 'good'
       result = " <span class='predict-#{ prdClass }''></span>"
     result

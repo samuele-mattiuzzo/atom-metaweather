@@ -16,23 +16,23 @@
     /* humidity icon */
     .humidity::after { content: '%'; }
 
-    /* wind icons */
-    .n::after { content: "↑"; }
-    .s::after { content: '↓'; }
-    .e::after { content: '→'; }
-    .w::after { content: '←'; }
-    .ne::after { content: '↗'; }
-    .nw::after { content: '↖'; }
-    .se::after { content: '↘'; }
-    .sw::after { content: "↙"; }
+    /*
+       wind icons
+       flipped because the direction identifies where the wind comes from
+       and not where it's headed
+    */
+    .s::after { content: "↑"; }
+    .n::after { content: '↓'; }
+    .w::after { content: '→'; }
+    .e::after { content: '←'; }
+    .sw::after { content: '↗'; }
+    .se::after { content: '↖'; }
+    .nw::after { content: '↘'; }
+    .ne::after { content: "↙"; }
 
     /* predictability icon */
     .predict-bad::after { content: '■'; color: @text-color-error; }
     .predict-avg::after { content: '■'; color: @text-color-warning; }
     .predict-good::after { content: '■'; color: @text-color-success; }
-
-    /* glyphs */
-    .glyph { color: @text-color-info; width: 9px; }
-    .snow::after { }
 
 }
