@@ -1,4 +1,4 @@
-## 0.2.1 - First package release
+## 0.2.2 - First package release
 * Added travis.ci support
 * Fixed tests
 
