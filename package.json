@@ -1,6 +1,7 @@
 {
   "name": "atom-metaweather",
   "main": "./lib/atom-metaweather",
+  "author": "Samuele Mattiuzzo <samumatt@gmail.com>",
   "version": "0.1.6",
   "description": "Gathers weather information from metaweather.com",
   "keywords": [
@@ -17,12 +18,6 @@
   },
   "dependencies": {
     "request": "2.67.0",
-    "coffee-script": "latest" ,
-    "jasmine-node": ">=1.0.26"
-  },
-  "scripts": {
-    "test": "./node_modules/.bin/cake test",
-    "install": "./node_modules/.bin/cake build"
   },
   "consumedServices": {
     "status-bar": {
