@@ -19,6 +19,7 @@ Status bar with all elements:
 * `showPredictability` &mdash; Shows validity of prediction indicator [`true`, `false`]
 * `position` &mdash; Control the placement of the indicator [`left`, `right`]
 * `updateTime` &mdash; Control the refresh time (150s default)
+* `cycleDates` &mdash; Cycle through today/tomorrow (default `true`)
 
 
 ### Get WOEID value from metaweather.com
