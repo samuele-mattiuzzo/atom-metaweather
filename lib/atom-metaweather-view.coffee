@@ -1,10 +1,12 @@
 request = require('request')
 shell = require('shell')
+
 Format = require './atom-metaweather-format'
+Const = require './atom-metaweather-const'
 
 class MetaweatherView extends HTMLElement
-  baseUrl: "https://www.metaweather.com"
-  apiUrl: "https://www.metaweather.com/api/location"
+  baseUrl: null
+  apiUrl: null
   locationWoeid: null
   locationName: null
   todayDate: null
@@ -22,11 +24,14 @@ class MetaweatherView extends HTMLElement
 
   initialize: (@statusBar) ->
     @format = Format
+    @const = new Const()
+    @baseUrl = @const.baseUrl
+    @apiUrl = @const.apiUrl
     @_loadSettings()
 
-    @classList.add('atom-metaweather', 'inline-block')
+    @classList.add(@const.packageClass, 'inline-block')
     @content = document.createElement('div')
-    @content.classList.add('atom-metaweather')
+    @content.classList.add(@const.packageClass)
 
     @appendChild(@content)
 
@@ -42,12 +47,13 @@ class MetaweatherView extends HTMLElement
 
   _loadSettings: ->
     # reads all the settings
-    @locationWoeid = atom.config.get('atom-metaweather.location')
-    @cycleDates = atom.config.get('atom-metaweather.cycleDates')
-    @showTemperature = atom.config.get('atom-metaweather.showTemperature')
-    @showHumidity = atom.config.get('atom-metaweather.showHumidity')
-    @showWind = atom.config.get('atom-metaweather.showWind')
-    @showPredictability = atom.config.get('atom-metaweather.showPredictability')
+    @locationWoeid = atom.config.get(@const.SettingsLocationWoeid)
+    @cycleDates = atom.config.get(@const.SettingsCycleDates)
+    @showTemperature = atom.config.get(@const.SettingsShowTemperature)
+    @showHumidity = atom.config.get(@const.SettingsShowHumidity)
+    @showWind = atom.config.get(@const.SettingsShowWind)
+    @showPredictability = atom.config.get(@const.SettingsShowPredictability)
+    @showWeatherIcon = atom.config.get(@const.SettingsShowWeatherIcon)
     @_getLocationData()
 
     [dd, mm, yyyy, tod, tom] = @_dateSettings()
@@ -62,13 +68,13 @@ class MetaweatherView extends HTMLElement
     dd = td.getDate()
     mm = td.getMonth()+1
     yyyy = td.getFullYear()
-    wdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-    tod = wdays[td.getDay()]
-    tom = wdays[td.getDay()+1]
+
+    tod = @const.wdays[td.getDay()]
+    tom = @const.wdays[td.getDay()+1]
     [dd, mm, yyyy, tod, tom]
 
   _getLocationData: ->
-    loc = atom.config.get('atom-metaweather.locationName')
+    loc = atom.config.get(@const.SettingsLocationName)
     loc = if loc == '' then null else loc
     self = @
     if !loc?
