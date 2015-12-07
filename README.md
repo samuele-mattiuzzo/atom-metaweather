@@ -12,7 +12,7 @@ Status bar with all elements:
 
 ## Configuration
 
-* `location` &mdash; WOEID of the location (see [next section](#Get WOEID value from metaweather.com)). Leave blank to automatically fetch from the user's current location
+* `location` &mdash; WOEID of the location (see [next section](#get-woeid-value-from-metaweathercom)). (TBD: Leave blank to automatically fetch from the user's current location)
 * `locationName` &mdash; Name of the location. Leave blank to automatically fetch from API
 * `showTemperature` &mdash; Shows the temperature meter [`true`, `false`]
 * `showWeatherIcon` &mdash; Shows the weather state icon [`true`, `false`]
@@ -24,7 +24,7 @@ Status bar with all elements:
 * `updateTime` &mdash; Control the refresh time in seconds between today and tomorrow dates cycle (default `60`)
 
 
-### Get WOEID value from metaweather.com
+### Get WOEID value from metaweather
 
 The [WOEID](https://developer.yahoo.com/geo/geoplanet/guide/concepts.html) number is a location identifier used by this package to query the API service.
 To get your city's number, visit https://www.metaweather.com/api/#locationsearch and follow the instructions:
