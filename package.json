@@ -2,7 +2,7 @@
   "name": "atom-metaweather",
   "main": "./lib/atom-metaweather",
   "author": "Samuele Mattiuzzo <samumatt@gmail.com>",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Gathers weather information from metaweather.com",
   "keywords": [
     "weather",
