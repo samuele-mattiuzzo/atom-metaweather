@@ -11,7 +11,7 @@
       "humidity",
       "status bar"
   ],
-  "repository": "https://github.com/atom/atom-metaweather",
+  "repository": "https://github.com/samuele-mattiuzzo/atom-metaweather",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
