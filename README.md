@@ -7,7 +7,7 @@ and uses [metaweather.com](https://www.metaweather.com) API data.
 
 Status bar with all elements:
 
-![Atom Metaweather 0.1.6 in action](https://github.com/samuele-mattiuzzo/atom-metaweather/blob/master/screenshot.png?raw=true)
+![Atom Metaweather 0.3.0 in action](https://github.com/samuele-mattiuzzo/atom-metaweather/blob/master/screenshot.png?raw=true)
 
 
 ## Configuration
