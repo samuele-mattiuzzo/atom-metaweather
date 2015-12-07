@@ -1,8 +1,10 @@
 request = require('request')
+shell = require('shell')
 Format = require './atom-metaweather-format'
 
 class MetaweatherView extends HTMLElement
-  url: "https://www.metaweather.com/api/location"
+  baseUrl: "https://www.metaweather.com"
+  apiUrl: "https://www.metaweather.com/api/location"
   locationWoeid: null
   locationName: null
   todayDate: null
@@ -21,17 +23,16 @@ class MetaweatherView extends HTMLElement
   initialize: (@statusBar) ->
     @format = Format
     @classList.add('atom-metaweather', 'inline-block')
-    # TODO: style it
     @content = document.createElement('div')
     @content.classList.add('atom-metaweather')
     @appendChild(@content)
-
     @_loadSettings()
-
-    @activeItemSubscription = atom.workspace.onDidChangeActivePaneItem =>
-      @update()
-
     @update()
+
+  _contentOnclick: ->
+    @content.onclick = (event, element) =>
+      date = if @cycleDates and @showTomorrow then @tomorrowDate else @todayDate
+      shell.openExternal("#{ @baseUrl }/#{ @locationWoeid }/#{ date }/")
 
   _loadSettings: ->
     # reads all the settings
@@ -66,7 +67,7 @@ class MetaweatherView extends HTMLElement
     self = @
     if !loc?
       # get from api
-      request.get { uri:"#{ @url }/#{ @locationWoeid }/", json: true },
+      request.get { uri:"#{ @apiUrl }/#{ @locationWoeid }/", json: true },
         (_, r, body) ->
           if r.statusCode == 200
             self.locationName = body['title']
@@ -84,11 +85,12 @@ class MetaweatherView extends HTMLElement
       # selects the correct url based on date and cycle setting
       getDate = if @cycleDates and @showTomorrow then @tomorrowDate else @todayDate
       [data, self] = ['-', @]
-      request.get { uri:"#{ @url }/#{ @locationWoeid }/#{ getDate }/", json: true },
+      request.get { uri:"#{ @apiUrl }/#{ @locationWoeid }/#{ getDate }/", json: true },
         (_, r, body) ->
           if r.statusCode == 200
             # success
             data = self._formatOutput body
+            self._contentOnclick()
           else
             # TODO: better logging report to user
             console.log(r.statusMessage)
