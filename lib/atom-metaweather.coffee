@@ -26,6 +26,9 @@ class Metaweather
     showTemperature:
       type: 'boolean'
       default: true
+    showWeatherIcon:
+      type: 'boolean'
+      default: true
     showWind:
       type: 'boolean'
       default: false

@@ -19,10 +19,12 @@ class Format
     result = ""
     if @obj.showTemperature
       result = "<span class='temperature'> #{ parseInt(@data['the_temp']) }</span>"
-      # glyph
-      # TODO: map glyphs to weather_state_name
-      glyph = @data['weather_state_name']
-      result += "<span class='snow'></span>"
+
+    # glyph
+    if @obj.showWeatherIcon?
+      glyphClass = "state-#{ @data['weather_state_abbr'] }"
+      result += " <span class='#{ glyphClass }'></span>"
+
     result
 
   _formatWind: ->
@@ -30,7 +32,7 @@ class Format
     result = ""
     if @obj.showWind
       cls = @data['wind_direction_compass'].toLowerCase()
-      result = " <span class='#{ cls }'>#{ parseInt(@data['wind_speed']) }</span>"
+      result = " <span class='dir-#{ cls }'><span class='wind'>#{ parseInt(@data['wind_speed']) }</span></span>"
     result
 
   _formatHumidity: ->

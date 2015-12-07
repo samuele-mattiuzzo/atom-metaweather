@@ -12,6 +12,7 @@ class MetaweatherView extends HTMLElement
   cycleDates: true
   showTomorrow: false
   showTemperature: true
+  showWeatherIcon: true
   showWind: false
   showHumidity: false
   showPredictability: false
