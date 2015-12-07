@@ -2,14 +2,14 @@
   "name": "atom-metaweather",
   "main": "./lib/atom-metaweather",
   "author": "Samuele Mattiuzzo <samumatt@gmail.com>",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "description": "Gathers weather information from metaweather.com",
   "keywords": [
-      "weather",
-      "metaweather",
-      "wind",
-      "humidity",
-      "status bar"
+    "weather",
+    "metaweather",
+    "wind",
+    "humidity",
+    "status bar"
   ],
   "repository": "https://github.com/samuele-mattiuzzo/atom-metaweather",
   "license": "MIT",
