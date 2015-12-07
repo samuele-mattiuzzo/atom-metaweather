@@ -29,29 +29,8 @@ describe "Metaweather", ->
       expect(weather).toBeDefined()
       expect(weather.classList.contains('atom-metaweather')).toBeTruthy()
 
-    describe 'when position is "left"', ->
-      it 'displays to the left in the status bar', ->
-        atom.config.set('atom-metaweather.position', 'left')
-        atom.packages.deactivatePackage('atom-metaweather')
-
-        waitsForPromise -> atom.packages.activatePackage('atom-metaweather')
-
-        runs ->
-          weather = Metaweather.view
-          expect(weather).toBeDefined()
-          expect(weather.parentNode.classList.contains('status-bar-left')).toBeTruthy()
-
-    describe 'when position is "right"', ->
-      it 'displays to the right in the status bar', ->
-        atom.config.set('atom-metaweather.position', 'right')
-        atom.packages.deactivatePackage('atom-metaweather')
-
-        waitsForPromise -> atom.packages.activatePackage('atom-metaweather')
-
-        runs ->
-          weather = Metaweather.view
-          expect(weather).toBeDefined()
-          expect(weather.parentNode.classList.contains('status-bar-right')).toBeTruthy()
+    it 'is correctly positioned', ->
+      expect(weather.parentNode.classList.contains('status-bar-right')).toBeTruthy()
 
   describe '::deactivate', ->
     it 'removes the weather view', ->

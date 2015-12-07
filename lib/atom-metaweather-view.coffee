@@ -61,6 +61,7 @@ class MetaweatherView extends HTMLElement
 
   _getLocationData: ->
     loc = atom.config.get('atom-metaweather.locationName')
+    loc = if loc == '' then null else loc
     self = @
     if !loc?
       # get from api

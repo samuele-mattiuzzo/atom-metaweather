@@ -11,7 +11,7 @@ class Metaweather
       default: 44418
     locationName:
       type: 'string'
-      default: null
+      default: ''
     updateTime:
       type: 'integer'
       default: 150
