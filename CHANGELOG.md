@@ -1,3 +1,7 @@
+## 0.3.1 - Cleans code
+* Links to metaweather.com
+* Other minor updates to README and package.json
+
 ## 0.3.0 - Fixes wind bug, implements glyphs
 * Fixed an issue in wind icons (Issue \#8)
 * Implemented glyphs for weather state
