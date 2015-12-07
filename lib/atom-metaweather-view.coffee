@@ -22,11 +22,17 @@ class MetaweatherView extends HTMLElement
 
   initialize: (@statusBar) ->
     @format = Format
+    @_loadSettings()
+
     @classList.add('atom-metaweather', 'inline-block')
     @content = document.createElement('div')
     @content.classList.add('atom-metaweather')
+
     @appendChild(@content)
-    @_loadSettings()
+
+    @activeItemSubscription = atom.workspace.onDidChangeActivePaneItem =>
+      @update()
+
     @update()
 
   _contentOnclick: ->
@@ -90,7 +96,6 @@ class MetaweatherView extends HTMLElement
           if r.statusCode == 200
             # success
             data = self._formatOutput body
-            self._contentOnclick()
           else
             # TODO: better logging report to user
             console.log(r.statusMessage)
@@ -104,6 +109,7 @@ class MetaweatherView extends HTMLElement
   update: ->
     if @locationWoeid?
       @_getApiData()
+      @_contentOnclick()
 
   # Tear down any state and detach
   destroy: ->
