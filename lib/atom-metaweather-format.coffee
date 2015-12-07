@@ -22,6 +22,7 @@ class Format
       # glyph
       # TODO: map glyphs to weather_state_name
       glyph = @data['weather_state_name']
+      result += "<span class='snow'></span>"
     result
 
   _formatWind: ->
