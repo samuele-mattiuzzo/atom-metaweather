@@ -10,6 +10,7 @@ describe "Metaweather", ->
 
   beforeEach ->
     workspaceElement = atom.views.getView(atom.workspace)
+    atom.workspaceView = workspaceElement.__spacePenView
     jasmine.attachToDOM(workspaceElement)
     atom.config.set('atom-metaweather.position', 'left')
     waitsForPromise -> atom.packages.activatePackage('status-bar')
@@ -17,7 +18,8 @@ describe "Metaweather", ->
     waitsForPromise -> atom.packages.activatePackage('language-gfm')
 
     runs ->
-      atom.config.set('editor', locationName: "London", position: "right")
+      atom.config.set('atom-metaweather.position', "right")
+      atom.config.set('atom-metaweather.location', 44418)
       atom.packages.emitter.emit('did-activate-all')
 
       weather = Metaweather.view
