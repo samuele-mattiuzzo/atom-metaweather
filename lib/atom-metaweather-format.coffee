@@ -1,18 +1,22 @@
 class Format
   data = []
 
+
   constructor: (data, obj) ->
     @data = data
     @obj = obj
 
   _formatPre: ->
     # composes the final message and writes it in the status bar
+    tagOpen = "<span class='location'>"
+    tagClose= "</span>"
     result = ""
     if @obj.locationName?
       day = if not @obj.showTomorrow then @obj.todayDay else @obj.tomorrowDay
       loc = @obj.locationName.substring(0,3).toUpperCase()
-      result = "<span class='location'>#{ loc }</span> #{ day }"
-    result
+      result = "<span class='title'>#{ loc }</span> #{ day }"
+    result = if result.length then result else '-'
+    "#{ tagOpen }#{ result }#{ tagClose }"
 
   _formatTemperature: ->
     # temperature?
@@ -55,19 +59,25 @@ class Format
       result = " <span class='predict-#{ prdClass }''></span>"
     result
 
-  get: ->
-    pre = @_formatPre()
-    pre = if pre.length then pre else '-'
-
+  _formatAll: ->
+    tagOpen = "<span class='stats'>"
+    tagClose= "</span>"
+    result = '-'
     if @data?
       temperature = @_formatTemperature()
       wind = @_formatWind()
       humidity = @_formatHumidity()
       predict = @_formatPredictability()
-      out = "#{ temperature}#{ humidity }#{ wind }#{ predict }"
-      out = if out.length then out else '-'
+      result = "#{ temperature}#{ humidity }#{ wind }#{ predict }"
+      result = if result.length then result else '-'
     else
-      out = '-'
+      result
+    "#{ tagOpen }#{ result }#{ tagClose }"
+
+  get: ->
+    pre = @_formatPre()
+    out = @_formatAll()
+
     "#{ pre }: #{ out }"
 
 module.exports = Format

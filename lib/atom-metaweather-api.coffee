@@ -1,3 +1,4 @@
+request = require('request')
 Const = require './atom-metaweather-const'
 
 class API
@@ -13,7 +14,8 @@ class API
     tomorrowData = null
     lastChecked = null
 
-    initialize: (woeid, location, bothDays, todayUrl, tomorrowUrl)->
+
+    constructor: (woeid, location, bothDays, todayUrl, tomorrowUrl)->
       @cst = new Const()
       @woeid = woeid
       @location = location
@@ -25,22 +27,23 @@ class API
       if @timeToRefresh()
         [todayData, tomorowData] = [null, null]
         @setApiData()
+        @setLocation()
 
     timeToRefresh: ->
       if @lastChecked?
         now = new Date()
         diff = Math.abs(now - @lastChecked) / 36e5
-        dif > 1
+        diff >= 1
       else
         true
 
     setLocation: ->
       if ~@location?
-        if @woeid then _getLocationWoeid(@woeid) else _getLocationUser()
+        if @woeid? then @_getLocationWoeid() else @_getLocationUser()
 
-    _getLocationWoeid: (woeid) ->
+    _getLocationWoeid: ->
       self = @
-      request.get { uri:"#{ @cst.baseUrl }/#{ @woeid }/", json: true },
+      request.get { uri:"#{ self.cst.apiUrl }/#{ self.woeid }/", json: true },
         (_, r, body) ->
           if r.statusCode == 200
             self.woeid = body['woeid']
@@ -50,26 +53,35 @@ class API
 
     _getLocationUser: ->
       # TODO: Implement me!
-      @_getLocationWoeid(44418)
+      @_getLocationWoeid('44418')
 
     setApiData: ->
       if ~@todayData?
-          if @bothDays then [@_getData(@todayUrl, 1), @_getData(@tomorrowUrl, 2)] else [@_getData(@todayUrl, 1)]
+        @_getData(@todayUrl, 1)
+      if @bothDays and ~@tomorowData?
+        @_getData(@tomorrowUrl, 2)
 
     _getData: (url, day)->
-        self = @
-        key = if day == 1 then 'todayData' else 'tomorrowData'
-        request.get { uri:"#{ url }", json: true },
+        [self, day, url] = [@, day, url]
+        request.get { uri:url, json: true },
           (_, r, body) ->
             if r.statusCode == 200
               # success
-              self[key] = body
+              if day == 1
+                self.todayData = body
+              else
+                self.tomorrowData = body
               self.lastChecked = new Date()
             else
               console.log(r.statusMessage)
 
-    getLocation: -> @location
-    getToday: -> @todayData
-    getTomorrow: -> @tomorowData
+    getLocation: ->
+      @location
+
+    getToday: ->
+      @todayData
+
+    getTomorrow: ->
+      @tomorrowData
 
 module.exports = API

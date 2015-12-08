@@ -14,7 +14,7 @@ class Metaweather
       default: ''
     updateTime:
       type: 'integer'
-      default: 150
+      default: 120
       minimum: 60
     position:
       type: 'string'

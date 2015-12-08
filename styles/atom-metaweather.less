@@ -17,58 +17,62 @@
 
 .atom-metaweather {
     color: @text-color;
-    .location { color: @mw-color-base; }
+    .location.title { color: @mw-color-base; }
 
-    span::after { font-size: @mw-after-font-size; }
+    .stats {
 
-    /* temperature icon */
-    .temperature::after { content: '℃'; }
+        span::after { font-size: @mw-after-font-size; }
 
-    /* humidity icon */
-    .humidity::after { content: '%'; }
+        /* temperature icon */
+        .temperature::after { content: '℃'; }
 
-    /* wind icon */
-    .wind::after { content: 'mph'; }
+        /* humidity icon */
+        .humidity::after { content: '%'; }
 
-    /*
-       wind icons
-       flipped because the direction identifies where the wind comes from
-       and not where it's headed
-    */
-    .dir-s::after { content: "↑"; }
-    .dir-n::after { content: '↓'; }
-    .dir-w::after { content: '→'; }
-    .dir-e::after { content: '←'; }
-    .dir-sw::after { content: '↗'; }
-    .dir-se::after { content: '↖'; }
-    .dir-nw::after { content: '↘'; }
-    .dir-ne::after { content: "↙"; }
+        /* wind icon */
+        .wind::after { content: 'mph'; }
 
-    /* predictability icon */
-    .predict-bad::after { content: '■'; color: @mw-color-bad; }
-    .predict-avg::after { content: '■'; color: @mw-color-avg; }
-    .predict-good::after { content: '■'; color: @mw-color-good; }
+        /*
+           wind icons
+           flipped because the direction identifies where the wind comes from
+           and not where it's headed
+        */
+        .dir-s::after { content: "↑"; }
+        .dir-n::after { content: '↓'; }
+        .dir-w::after { content: '→'; }
+        .dir-e::after { content: '←'; }
+        .dir-sw::after { content: '↗'; }
+        .dir-se::after { content: '↖'; }
+        .dir-nw::after { content: '↘'; }
+        .dir-ne::after { content: "↙"; }
 
-    /* glyphs */
-    .glyph (@name) {
-        color: @mw-color-base;
-        width: @mw-glyph-size;
-        height: @mw-glyph-size;
-        background-size: contain;
-        display: inline-block;
-        content: '';
-        @url: %(@mw-assets-url, @name);
-        background-image: url(@url);
+        /* predictability icon */
+        .predict-bad::after { content: '■'; color: @mw-color-bad; }
+        .predict-avg::after { content: '■'; color: @mw-color-avg; }
+        .predict-good::after { content: '■'; color: @mw-color-good; }
+
+        /* glyphs */
+        .glyph (@name) {
+            color: @mw-color-base;
+            width: @mw-glyph-size;
+            height: @mw-glyph-size;
+            background-size: contain;
+            display: inline-block;
+            content: '';
+            @url: %(@mw-assets-url, @name);
+            background-image: url(@url);
+        }
+        .state-sn::after { .glyph('sn'); }
+        .state-sl::after { .glyph('sl'); }
+        .state-h::after  { .glyph('h');  }
+        .state-t::after	 { .glyph('t');  }
+        .state-hr::after { .glyph('hr'); }
+        .state-lr::after { .glyph('lr'); }
+        .state-s::after  { .glyph('s');  }
+        .state-hc::after { .glyph('hc'); }
+        .state-lc::after { .glyph('lc'); }
+        .state-c::after  { .glyph('c');  }
+
     }
-    .state-sn::after { .glyph('sn'); }
-    .state-sl::after { .glyph('sl'); }
-    .state-h::after  { .glyph('h');  }
-    .state-t::after	 { .glyph('t');  }
-    .state-hr::after { .glyph('hr'); }
-    .state-lr::after { .glyph('lr'); }
-    .state-s::after  { .glyph('s');  }
-    .state-hc::after { .glyph('hc'); }
-    .state-lc::after { .glyph('lc'); }
-    .state-c::after  { .glyph('c');  }
 
 }

@@ -1,8 +1,7 @@
-request = require('request')
 shell = require('shell')
 
-Const = require './atom-metaweather-const'
 Format = require './atom-metaweather-format'
+Const = require './atom-metaweather-const'
 API = require './atom-metaweather-api'
 
 class MetaweatherView extends HTMLElement
@@ -25,9 +24,12 @@ class MetaweatherView extends HTMLElement
   showHumidity: false
   showPredictability: false
 
+
   initialize: (@statusBar) ->
     @_loadSettings()
-    @locationName = @_getLocationData()
+
+    #if @api.timeToRefresh
+    #  @api.refresh()
 
     @classList.add(@cst.packageClass, 'inline-block')
     @content = document.createElement('div')
@@ -53,6 +55,7 @@ class MetaweatherView extends HTMLElement
     @showWind = atom.config.get(@cst.SettingsShowWind)
     @showPredictability = atom.config.get(@cst.SettingsShowPredictability)
     @showWeatherIcon = atom.config.get(@cst.SettingsShowWeatherIcon)
+    @updateTime = atom.config.get(@cst.SettingsUpdateTime)
 
 
     [dd, mm, yyyy, tod, tom] = @_dateSettings()
@@ -69,7 +72,6 @@ class MetaweatherView extends HTMLElement
       "#{ @cst.apiUrl }/#{ @locationWoeid }/#{ @todayDate }/",
       "#{ @cst.apiUrl }/#{ @locationWoeid }/#{ @tomorrowDate }/"
     )
-    @api.refresh()
 
   _dateSettings: ->
     td = new Date()
@@ -102,9 +104,20 @@ class MetaweatherView extends HTMLElement
 
   # Public: Updates the indicator.
   update: ->
+    #if ~@api? or @api.timeToRefresh()
+    #  if ~@api?
+    #    @api = new API(
+    #      @locationWoeid,
+    #      @locationName,
+    #      @cycleDates
+    #      "#{ @cst.apiUrl }/#{ @locationWoeid }/#{ @todayDate }/",
+    #      "#{ @cst.apiUrl }/#{ @locationWoeid }/#{ @tomorrowDate }/"
+    #    )
+    #  @api.refresh()
     if @locationWoeid?
       @_writeData()
       @_contentOnclick()
+    setTimeout @update, @updateTime * 1000
 
   # Tear down any state and detach
   destroy: ->
