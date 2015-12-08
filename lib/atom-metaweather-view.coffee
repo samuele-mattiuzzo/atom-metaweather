@@ -28,9 +28,6 @@ class MetaweatherView extends HTMLElement
   initialize: (@statusBar) ->
     @_loadSettings()
 
-    #if @api.timeToRefresh
-    #  @api.refresh()
-
     @classList.add(@cst.packageClass, 'inline-block')
     @content = document.createElement('div')
     @content.classList.add(@cst.packageClass)
@@ -104,19 +101,13 @@ class MetaweatherView extends HTMLElement
 
   # Public: Updates the indicator.
   update: ->
-    #if ~@api? or @api.timeToRefresh()
-    #  if ~@api?
-    #    @api = new API(
-    #      @locationWoeid,
-    #      @locationName,
-    #      @cycleDates
-    #      "#{ @cst.apiUrl }/#{ @locationWoeid }/#{ @todayDate }/",
-    #      "#{ @cst.apiUrl }/#{ @locationWoeid }/#{ @tomorrowDate }/"
-    #    )
-    #  @api.refresh()
+    if @api.timeToRefresh()
+      @api.refresh()
     if @locationWoeid?
       @_writeData()
       @_contentOnclick()
+    else
+      @_getLocationData()
     setTimeout @update, @updateTime * 1000
 
   # Tear down any state and detach

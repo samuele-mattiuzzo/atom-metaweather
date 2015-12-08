@@ -26,8 +26,8 @@ class API
     refresh: ->
       if @timeToRefresh()
         [todayData, tomorowData] = [null, null]
-        @setApiData()
         @setLocation()
+        @setApiData()
 
     timeToRefresh: ->
       if @lastChecked?
@@ -76,7 +76,8 @@ class API
               console.log(r.statusMessage)
 
     getLocation: ->
-      @location
+      @setLocation()
+      return null unless @location
 
     getToday: ->
       @todayData
