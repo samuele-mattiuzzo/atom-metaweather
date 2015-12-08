@@ -59,13 +59,15 @@ class Format
     pre = @_formatPre()
     pre = if pre.length then pre else '-'
 
-    temperature = @_formatTemperature()
-    wind = @_formatWind()
-    humidity = @_formatHumidity()
-    predict = @_formatPredictability()
-    out = "#{ temperature}#{ humidity }#{ wind }#{ predict }"
-    out = if out.length then out else '-'
-
+    if @data?
+      temperature = @_formatTemperature()
+      wind = @_formatWind()
+      humidity = @_formatHumidity()
+      predict = @_formatPredictability()
+      out = "#{ temperature}#{ humidity }#{ wind }#{ predict }"
+      out = if out.length then out else '-'
+    else
+      out = '-'
     "#{ pre }: #{ out }"
 
 module.exports = Format

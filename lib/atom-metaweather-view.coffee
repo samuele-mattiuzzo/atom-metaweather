@@ -25,7 +25,6 @@ class MetaweatherView extends HTMLElement
   showHumidity: false
   showPredictability: false
 
-
   initialize: (@statusBar) ->
     @_loadSettings()
     @locationName = @_getLocationData()
@@ -70,6 +69,7 @@ class MetaweatherView extends HTMLElement
       "#{ @cst.apiUrl }/#{ @locationWoeid }/#{ @todayDate }/",
       "#{ @cst.apiUrl }/#{ @locationWoeid }/#{ @tomorrowDate }/"
     )
+    @api.refresh()
 
   _dateSettings: ->
     td = new Date()
@@ -91,13 +91,14 @@ class MetaweatherView extends HTMLElement
 
   _formatOutput: (data) ->
       # creates the output string
-      f = new @format(data[0], this)
+      day = if ~data? then null else data[0]
+      f = new @format(day, @)
       f.get()
 
   _writeData: ->
-      data = if @cycleDates and @showTomorrow then @api.getToday() else @api.getTomorrow()
+      data = if @cycleDates and @showTomorrow then @api.getTomorrow() else @api.getToday()
       @content.innerHTML = @_formatOutput(data)
-      @showTomorrow = if @cycleDates then !@showTomorrow else @showTomorrow
+      @showTomorrow = @cycleDates and not @showTomorrow
 
   # Public: Updates the indicator.
   update: ->

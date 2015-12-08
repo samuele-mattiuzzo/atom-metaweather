@@ -20,8 +20,6 @@ class API
       @bothDays = bothDays
       @todayUrl = todayUrl
       @tomorrowUrl = tomorrowUrl
-      @setLocation()
-      @setApiData()
 
     refresh: ->
       if @timeToRefresh()
