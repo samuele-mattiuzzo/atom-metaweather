@@ -33,7 +33,7 @@ class MetaweatherView extends HTMLElement
     @content.classList.add(@cst.packageClass)
 
     @appendChild(@content)
-    @update()
+    @update(@)
 
   _loadSettings: ->
     @format = Format
@@ -58,12 +58,14 @@ class MetaweatherView extends HTMLElement
     @todayDay = tod
     @tomorrowDate = "#{ yyyy }/#{ mm }/#{ dd+1 }"
     @tomorrowDay = tom
+    @createApi()
 
+  createApi: ->
     # creates the api object without resolving it
     @api = new API(
       @locationWoeid,
       @locationName,
-      @cycleDates
+      @cycleDates,
       "#{ @cst.apiUrl }/#{ @locationWoeid }/#{ @todayDate }/",
       "#{ @cst.apiUrl }/#{ @locationWoeid }/#{ @tomorrowDate }/"
     )
@@ -78,7 +80,7 @@ class MetaweatherView extends HTMLElement
     tom = @cst.wdays[td.getDay()+1]
     [dd, mm, yyyy, tod, tom]
 
-  _getLocationData: ->
+  getLocationData: ->
     @locationWoeid = @api.getWoeid()
     @locationName = @api.getLocation()
 
@@ -94,26 +96,26 @@ class MetaweatherView extends HTMLElement
       f = new @format(day, @)
       f.get()
 
-  _writeData: ->
-      data = if @cycleDates and @showTomorrow then @api.getTomorrow() else @api.getToday()
-      @content.innerHTML = @_formatOutput(data)
+  writeData: ->
+      data = if @cycleDates and @showTomorrow then @api?.getTomorrow() else @api?.getToday()
+      debugger;
+      @content.innerHTML = @_formatOutput data
       @_contentOnclick()
       # switches between today and tomorrow, if
       # every 5 minutes
       @showTomorrow = @cycleDates and not @showTomorrow
-      setTimeout @_writeData, 300 * @cst.SEC
+      setTimeout @writeData, 5 * @cst.SEC
 
   # Public: Updates the indicator.
   update: ->
     # api object will take care of refresh times
     @api.refresh()
-    debugger;
     if not @locationWoeid?
-      @_getLocationData()
+      @getLocationData()
     # loops
-    @_writeData()
+    @writeData()
     # re-updates every 30 minutes to avoid missing weather updates
-    setTimeout @update, @updateTime * @cst.SEC
+    setTimeout (@update.bind @), @updateTime * @cst.SEC
 
 
 module.exports = document.registerElement('status-bar-metaweather',

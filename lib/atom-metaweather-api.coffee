@@ -39,16 +39,14 @@ class API
 
     setLocation: ->
       if not @location?
-        if @woeid? then @_getLocationWoeid(@woeid) else @_getLocationUser()
+        if @woeid? then @_getLocationWoeid(@woeid).bind(@) else @_getLocationUser()
 
     _getLocationWoeid: (woeid)->
-      [self, woeid] = [@, woeid]
       request({ uri:"#{ self.cst.apiUrl }/#{ woeid }/", json: true })
         .then((body) ->
-          self.woeid = body['woeid']
-          self.location = body['title']
-        )
-        .catch((err) ->
+          @woeid = body['woeid']
+          @location = body['title']
+        ).catch((err) ->
           console.log(err)
         )
 
@@ -58,20 +56,18 @@ class API
 
     setApiData: ->
       if not @todayData?
-        @_getData(@todayUrl, "today")
+        @_getData(@todayUrl, "today").bind(@)
       if @bothDays and not @tomorowData?
-        @_getData(@tomorrowUrl, "tomorrow")
+        @_getData(@tomorrowUrl, "tomorrow").bind(@)
 
     _getData: (url, day)->
-      [self, day, url] = [@, day, url]
-      request({ uri:url, json: true })
-        .then((body) ->
-          self["#{ day }Data"] = body
-          self.lastChecked = new Date()
-        )
-        .catch((error) ->
-          console.log(error)
-        )
+      request({uri:url, json:true})
+      .then((body) ->
+          @["#{ day }Data"] = body
+          @lastChecked = new Date()
+      ).catch((error) ->
+          console.log('get data error ' + error)
+      )
 
     getWoeid: ->
       @woeid
