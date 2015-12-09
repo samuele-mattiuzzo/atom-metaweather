@@ -23,6 +23,7 @@ class API
       @todayUrl = todayUrl
       @tomorrowUrl = tomorrowUrl
 
+    # Data fetch methods
     refresh: ->
       if @timeToRefresh()
         [todayData, tomorowData] = [null, null]
@@ -39,16 +40,19 @@ class API
 
     setLocation: ->
       if not @location?
-        if @woeid? then @_getLocationWoeid(@woeid).bind(@) else @_getLocationUser()
+        if @woeid?
+          @_getLocationWoeid(@woeid).bind(@)
+        else
+          @_getLocationUser().bind(@)
 
     _getLocationWoeid: (woeid)->
       request({ uri:"#{ self.cst.apiUrl }/#{ woeid }/", json: true })
-        .then((body) ->
-          @woeid = body['woeid']
-          @location = body['title']
-        ).catch((err) ->
-          console.log(err)
-        )
+      .then(( body)=>
+        [@woeid, @location] = [body['woeid'], body['title']]
+      )
+      .catch( (err)=>
+        console.log(err)
+      )
 
     _getLocationUser: ->
       # TODO: Implement me!
@@ -60,15 +64,15 @@ class API
       if @bothDays and not @tomorowData?
         @_getData(@tomorrowUrl, "tomorrow").bind(@)
 
-    _getData: (url, day)->
+    _getData: (url, day) ->
       request({uri:url, json:true})
-      .then((body) ->
-          @["#{ day }Data"] = body
-          @lastChecked = new Date()
-      ).catch((error) ->
-          console.log('get data error ' + error)
+      .then((body) =>
+        @["#{ day }Data"] = body
+        @lastChecked = new Date()
       )
+      .catch((err) => console.log('[ERROR] GET #{ url }:  #{ error }') )
 
+    # Getters
     getWoeid: ->
       @woeid
 

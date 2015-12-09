@@ -14,8 +14,8 @@ class Metaweather
       default: 'London'
     updateTime:
       type: 'integer'
-      default: 1800
-      minimum: 60
+      default: 30
+      enum: [15, 30, 60, 120]
     position:
       type: 'string'
       default: 'right'
@@ -23,6 +23,10 @@ class Metaweather
     cycleDates:
       type: 'boolean'
       default: true
+    cycleTime:
+      type: 'integer'
+      default: 30
+      enum: [30, 60, 120, 300]
     showTemperature:
       type: 'boolean'
       default: true

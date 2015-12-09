@@ -21,7 +21,8 @@ Status bar with all elements:
 * `showPredictability` &mdash; Shows an indicator for the validity of a prediction (red=bad, yellow=average, green=good)[`true`, `false`]
 * `position` &mdash; Control the placement of the meters [`left`, `right`]
 * `cycleDates` &mdash; Allow cycling through today/tomorrow (default `true`)
-* `updateTime` &mdash; Control the refresh time in seconds between today and tomorrow dates cycle (default `60`)
+* `cycleTime` &mdash; Control the refresh time in seconds between today and tomorrow dates cycle [30, 60, 120, 300]
+* `updateTime` &mdash; Control the API refresh time in minutes [15, 30, 60, 120]
 
 
 ### Get WOEID value from metaweather

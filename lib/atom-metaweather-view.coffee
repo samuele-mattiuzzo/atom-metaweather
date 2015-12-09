@@ -17,6 +17,7 @@ class MetaweatherView extends HTMLElement
   tomorrowDay: null
 
   cycleDates: true
+  cycleTime: null
   showTomorrow: false
   showTemperature: true
   showWeatherIcon: true
@@ -33,7 +34,7 @@ class MetaweatherView extends HTMLElement
     @content.classList.add(@cst.packageClass)
 
     @appendChild(@content)
-    @update(@)
+    @update()
 
   _loadSettings: ->
     @format = Format
@@ -43,6 +44,7 @@ class MetaweatherView extends HTMLElement
     @locationWoeid = atom.config.get(@cst.SettingsLocationWoeid)
     @locationName = atom.config.get(@cst.SettingsLocationName)
     @cycleDates = atom.config.get(@cst.SettingsCycleDates)
+    @cycleTime = atom.config.get(@cst.SettingsCycleTime)
     @showTemperature = atom.config.get(@cst.SettingsShowTemperature)
     @showHumidity = atom.config.get(@cst.SettingsShowHumidity)
     @showWind = atom.config.get(@cst.SettingsShowWind)
@@ -97,14 +99,13 @@ class MetaweatherView extends HTMLElement
       f.get()
 
   writeData: ->
-      data = if @cycleDates and @showTomorrow then @api?.getTomorrow() else @api?.getToday()
-      debugger;
+      data = if @cycleDates and @showTomorrow then @api.getTomorrow() else @api.getToday()
       @content.innerHTML = @_formatOutput data
       @_contentOnclick()
       # switches between today and tomorrow, if
       # every 5 minutes
       @showTomorrow = @cycleDates and not @showTomorrow
-      setTimeout @writeData, 5 * @cst.SEC
+      setTimeout @writeData.bind(@), @cycleTime * @cst.SEC
 
   # Public: Updates the indicator.
   update: ->
@@ -115,7 +116,7 @@ class MetaweatherView extends HTMLElement
     # loops
     @writeData()
     # re-updates every 30 minutes to avoid missing weather updates
-    setTimeout (@update.bind @), @updateTime * @cst.SEC
+    setTimeout @update.bind(@), @updateTime * @cst.SEC
 
 
 module.exports = document.registerElement('status-bar-metaweather',
