@@ -45,12 +45,6 @@ describe "Metaweather", ->
       atom.packages.deactivatePackage('atom-metaweather')
       atom.packages.deactivatePackage('atom-metaweather')
 
-    it 'disposes of subscriptions', ->
-      spyOn(Metaweather.subscriptions, 'dispose')
-      atom.packages.deactivatePackage('atom-metaweather')
-
-      expect(Metaweather.subscriptions.dispose).toHaveBeenCalled()
-
   describe 'when the configuration changes', ->
     it 'moves the weather', ->
       atom.config.set('atom-metaweather.position', 'right')

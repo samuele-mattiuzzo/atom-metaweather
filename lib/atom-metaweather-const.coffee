@@ -14,6 +14,7 @@ class Const
   SettingsPosition: 'atom-metaweather.position'
   SettingsUpdateTime: 'atom-metaweather.updateTime'
   wdays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+  SEC: 1000
 
 
 module.exports = Const

@@ -33,10 +33,6 @@ class MetaweatherView extends HTMLElement
     @content.classList.add(@cst.packageClass)
 
     @appendChild(@content)
-
-    @activeItemSubscription = atom.workspace.onDidChangeActivePaneItem =>
-      @update()
-
     @update()
 
   _loadSettings: ->
@@ -57,11 +53,13 @@ class MetaweatherView extends HTMLElement
 
     [dd, mm, yyyy, tod, tom] = @_dateSettings()
 
+    # sets up dates
     @todayDate = "#{ yyyy }/#{ mm }/#{ dd }"
     @todayDay = tod
     @tomorrowDate = "#{ yyyy }/#{ mm }/#{ dd+1 }"
     @tomorrowDay = tom
 
+    # creates the api object without resolving it
     @api = new API(
       @locationWoeid,
       @locationName,
@@ -81,38 +79,41 @@ class MetaweatherView extends HTMLElement
     [dd, mm, yyyy, tod, tom]
 
   _getLocationData: ->
-    @api.getLocation()
+    @locationWoeid = @api.getWoeid()
+    @locationName = @api.getLocation()
 
   _contentOnclick: ->
+    # adds a link to metaweather site
     @content.onclick = (event, element) =>
       date = if @cycleDates and @showTomorrow then @tomorrowDate else @todayDate
       shell.openExternal("#{ @cst.baseUrl }/#{ @locationWoeid }/#{ date }/")
 
   _formatOutput: (data) ->
       # creates the output string
-      day = if ~data? then null else data[0]
+      day = if not data? then null else data[0]
       f = new @format(day, @)
       f.get()
 
   _writeData: ->
       data = if @cycleDates and @showTomorrow then @api.getTomorrow() else @api.getToday()
       @content.innerHTML = @_formatOutput(data)
+      @_contentOnclick()
+      # switches between today and tomorrow, if
+      # every 5 minutes
       @showTomorrow = @cycleDates and not @showTomorrow
+      setTimeout @_writeData, 300 * @cst.SEC
 
   # Public: Updates the indicator.
   update: ->
-    if @api.timeToRefresh()
-      @api.refresh()
-    if @locationWoeid?
-      @_writeData()
-      @_contentOnclick()
-    else
+    # api object will take care of refresh times
+    @api.refresh()
+    debugger;
+    if not @locationWoeid?
       @_getLocationData()
-    setTimeout @update, @updateTime * 1000
-
-  # Tear down any state and detach
-  destroy: ->
-    @activeItemSubscription.dispose()
+    # loops
+    @_writeData()
+    # re-updates every 30 minutes to avoid missing weather updates
+    setTimeout @update, @updateTime * @cst.SEC
 
 
 module.exports = document.registerElement('status-bar-metaweather',

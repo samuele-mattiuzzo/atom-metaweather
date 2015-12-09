@@ -11,10 +11,10 @@ class Metaweather
       default: 44418
     locationName:
       type: 'string'
-      default: ''
+      default: 'London'
     updateTime:
       type: 'integer'
-      default: 120
+      default: 1800
       minimum: 60
     position:
       type: 'string'
@@ -54,12 +54,11 @@ class Metaweather
 
   # Public: Deactivates the package.
   deactivate: ->
-    @subscriptions?.dispose()
     @destroyTile()
 
   # Private: Destroys the status bar indicator view and its tile.
   destroyTile: ->
-    @view?.destroy()
+    @subscriptions?.dispose()
     @view = null
     @tile?.destroy()
     @tile = null
@@ -79,8 +78,8 @@ class Metaweather
     @view.initialize(@statusBar)
 
     if atom.config.get('atom-metaweather.position') is 'right'
-      @tile = @statusBar.addRightTile(item: @view, priority: priority)
+      @tile = @statusBar?.addRightTile(item: @view, priority: priority)
     else
-      @tile = @statusBar.addLeftTile(item: @view, priority: priority)
+      @tile = @statusBar?.addLeftTile(item: @view, priority: priority)
 
 module.exports = new Metaweather

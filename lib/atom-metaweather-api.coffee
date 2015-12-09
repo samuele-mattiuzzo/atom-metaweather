@@ -1,4 +1,4 @@
-request = require('request')
+request = require('request-promise')
 Const = require './atom-metaweather-const'
 
 class API
@@ -38,46 +38,46 @@ class API
         true
 
     setLocation: ->
-      if ~@location?
-        if @woeid? then @_getLocationWoeid() else @_getLocationUser()
+      if not @location?
+        if @woeid? then @_getLocationWoeid(@woeid) else @_getLocationUser()
 
-    _getLocationWoeid: ->
-      self = @
-      request.get { uri:"#{ self.cst.apiUrl }/#{ self.woeid }/", json: true },
-        (_, r, body) ->
-          if r.statusCode == 200
-            self.woeid = body['woeid']
-            self.location = body['title']
-          else
-            console.log(r.statusMessage)
+    _getLocationWoeid: (woeid)->
+      [self, woeid] = [@, woeid]
+      request({ uri:"#{ self.cst.apiUrl }/#{ woeid }/", json: true })
+        .then((body) ->
+          self.woeid = body['woeid']
+          self.location = body['title']
+        )
+        .catch((err) ->
+          console.log(err)
+        )
 
     _getLocationUser: ->
       # TODO: Implement me!
       @_getLocationWoeid('44418')
 
     setApiData: ->
-      if ~@todayData?
-        @_getData(@todayUrl, 1)
-      if @bothDays and ~@tomorowData?
-        @_getData(@tomorrowUrl, 2)
+      if not @todayData?
+        @_getData(@todayUrl, "today")
+      if @bothDays and not @tomorowData?
+        @_getData(@tomorrowUrl, "tomorrow")
 
     _getData: (url, day)->
-        [self, day, url] = [@, day, url]
-        request.get { uri:url, json: true },
-          (_, r, body) ->
-            if r.statusCode == 200
-              # success
-              if day == 1
-                self.todayData = body
-              else
-                self.tomorrowData = body
-              self.lastChecked = new Date()
-            else
-              console.log(r.statusMessage)
+      [self, day, url] = [@, day, url]
+      request({ uri:url, json: true })
+        .then((body) ->
+          self["#{ day }Data"] = body
+          self.lastChecked = new Date()
+        )
+        .catch((error) ->
+          console.log(error)
+        )
+
+    getWoeid: ->
+      @woeid
 
     getLocation: ->
-      @setLocation()
-      return null unless @location
+      @location
 
     getToday: ->
       @todayData
