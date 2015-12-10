@@ -12,17 +12,17 @@ Status bar with all elements:
 
 ## Configuration
 
-* `location `<sup>[\*](#settings-restart)</sup> &mdash; WOEID of the location (see [next section](#get-woeid-value-from-metaweathercom)). (TBD: Leave blank to automatically fetch from the user's current location)
-* `locationName `<sup>[\*](#settings-restart)</sup> &mdash; Name of the location. Leave blank to automatically fetch from API
+* `location `<sup>[\*](#settingsrestart)</sup> &mdash; WOEID of the location (see [next section](#get-woeid-value-from-metaweathercom)). (TBD: Leave blank to automatically fetch from the user's current location)
+* `locationName `<sup>[\*](#settingsrestart)</sup> &mdash; Name of the location. Leave blank to automatically fetch from API
 * `showTemperature` &mdash; Shows the temperature meter [`true`, `false`]
 * `showWeatherIcon` &mdash; Shows the weather state icon [`true`, `false`]
 * `showWind` &mdash; Shows the wind speed meter [`true`, `false`]
 * `showHumidity` &mdash; Shows the humidity meter [`true`, `false`]
 * `showPredictability` &mdash; Shows an indicator for the validity of a prediction (red=bad, yellow=average, green=good)[`true`, `false`]
 * `position` &mdash; Control the placement of the meters [`left`, `right`]
-* `cycleDates `<sup>[\*](#settings-restart)</sup> &mdash; Allow cycling through today/tomorrow (default `true`)
-* `cycleTime `<sup>[\*](#settings-restart)</sup> &mdash; Control the refresh time in seconds between today and tomorrow dates cycle [30, 60, 120, 300]
-* `updateTime `<sup>[\*](#settings-restart)</sup> &mdash; Control the API refresh time in minutes [15, 30, 60, 120]
+* `cycleDates `<sup>[\*](#settingsrestart)</sup> &mdash; Allow cycling through today/tomorrow (default `true`)
+* `cycleTime `<sup>[\*](#settingsrestart)</sup> &mdash; Control the refresh time in seconds between today and tomorrow dates cycle [30, 60, 120, 300]
+* `updateTime `<sup>[\*](#settingsrestart)</sup> &mdash; Control the API refresh time in minutes [15, 30, 60, 120]
 
 ``
 
@@ -45,6 +45,7 @@ All weather data and icons are taken from [metaweather.com](https://www.metaweat
 
 Copyright &copy; 2014-2015 [Samuele Mattiuzzo](https://samuele-mattiuzzo.github.io).
 
---------------
 
-<a name="settings-restart">\* Changing this setting requires restart</a>
+### Footnotes
+
+<a name="settingsrestart">\*</a> _Changing this setting requires restart_
