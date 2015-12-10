@@ -45,5 +45,6 @@ All weather data and icons are taken from [metaweather.com](https://www.metaweat
 
 Copyright &copy; 2014-2015 [Samuele Mattiuzzo](https://samuele-mattiuzzo.github.io).
 
+--------------
 
-<a name="settings-restart">\*</a>: Changing this setting requires restart
+<a name="settings-restart">\* Changing this setting requires restart</a>
