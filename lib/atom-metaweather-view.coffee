@@ -16,14 +16,15 @@ class MetaweatherView extends HTMLElement
   tomorrowDate: null
   tomorrowDay: null
 
-  cycleDates: true
+  cycleDates: null
   cycleTime: null
-  showTomorrow: false
-  showTemperature: true
-  showWeatherIcon: true
-  showWind: false
-  showHumidity: false
-  showPredictability: false
+  showTomorrow: null
+  showTemperature: null
+  showWeatherIcon: null
+  showWind: null
+  showHumidity: null
+  showPredictability: null
+  updateTime: null
 
 
   initialize: (@statusBar) ->
@@ -52,17 +53,17 @@ class MetaweatherView extends HTMLElement
     @showWeatherIcon = atom.config.get(@cst.SettingsShowWeatherIcon)
     @updateTime = atom.config.get(@cst.SettingsUpdateTime)
 
-
-    [dd, mm, yyyy, tod, tom] = @_dateSettings()
-
     # sets up dates
+    [dd, mm, yyyy, tod, tom] = @_dateSettings()
     @todayDate = "#{ yyyy }/#{ mm }/#{ dd }"
     @todayDay = tod
     @tomorrowDate = "#{ yyyy }/#{ mm }/#{ dd+1 }"
     @tomorrowDay = tom
-    @createApi()
 
-  createApi: ->
+    # finally, creates the api object
+    @_createApi()
+
+  _createApi: ->
     # creates the api object without resolving it
     @api = new API(
       @locationWoeid,
@@ -98,7 +99,7 @@ class MetaweatherView extends HTMLElement
       f = new @format(day, @)
       f.get()
 
-  writeData: ->
+  _writeData: ->
       data = if @cycleDates and @showTomorrow then @api.getTomorrow() else @api.getToday()
       @content.innerHTML = @_formatOutput data
       @_contentOnclick()
@@ -109,7 +110,7 @@ class MetaweatherView extends HTMLElement
         # switches between today and tomorrow, if
         # every cycleTime
         @showTomorrow = @cycleDates and not @showTomorrow
-        setTimeout @writeData.bind(@), @cycleTime * @cst.SEC
+        setTimeout @_writeData.bind(@), @cycleTime * @cst.SEC
 
   # Public: Updates the indicator.
   update: ->
@@ -118,7 +119,7 @@ class MetaweatherView extends HTMLElement
     if not @locationWoeid?
       @getLocationData()
     # loops
-    @writeData()
+    @_writeData()
     # re-updates every 30 minutes to avoid missing weather updates
     setTimeout @update.bind(@), @updateTime * 60 * @cst.SEC
 

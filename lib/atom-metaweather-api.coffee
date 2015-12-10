@@ -50,9 +50,7 @@ class API
       .then(( body)=>
         [@woeid, @location] = [body['woeid'], body['title']]
       )
-      .catch( (err)=>
-        console.log(err)
-      )
+      .catch((err) => console.log('[ERROR] GET location:  #{ error }') )
 
     _getLocationUser: ->
       # TODO: Implement me!
