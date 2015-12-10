@@ -6,12 +6,16 @@ class Const
   SettingsLocationName: 'atom-metaweather.locationName'
   SettingsLocationWoeid: 'atom-metaweather.location'
   SettingsCycleDates: 'atom-metaweather.cycleDates'
+  SettingsCycleTime: 'atom-metaweather.cycleTime'
   SettingsShowTemperature: 'atom-metaweather.showTemperature'
   SettingsShowHumidity: 'atom-metaweather.showHumidity'
   SettingsShowWind: 'atom-metaweather.showWind'
   SettingsShowPredictability: 'atom-metaweather.showPredictability'
   SettingsShowWeatherIcon: 'atom-metaweather.showWeatherIcon'
+  SettingsPosition: 'atom-metaweather.position'
+  SettingsUpdateTime: 'atom-metaweather.updateTime'
   wdays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+  SEC: 1000
 
 
 module.exports = Const

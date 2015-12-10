@@ -1,67 +1,77 @@
-request = require('request')
 shell = require('shell')
 
 Format = require './atom-metaweather-format'
 Const = require './atom-metaweather-const'
+API = require './atom-metaweather-api'
 
 class MetaweatherView extends HTMLElement
-  baseUrl: null
-  apiUrl: null
+  format: null
+  cst: null
+  api: null
+
   locationWoeid: null
   locationName: null
   todayDate: null
   todayDay: null
   tomorrowDate: null
   tomorrowDay: null
-  cycleDates: true
-  showTomorrow: false
-  showTemperature: true
-  showWeatherIcon: true
-  showWind: false
-  showHumidity: false
-  showPredictability: false
-  format: null
+
+  cycleDates: null
+  cycleTime: null
+  showTomorrow: null
+  showTemperature: null
+  showWeatherIcon: null
+  showWind: null
+  showHumidity: null
+  showPredictability: null
+  updateTime: null
+
 
   initialize: (@statusBar) ->
-    @format = Format
-    @const = new Const()
-    @baseUrl = @const.baseUrl
-    @apiUrl = @const.apiUrl
     @_loadSettings()
 
-    @classList.add(@const.packageClass, 'inline-block')
+    @classList.add(@cst.packageClass, 'inline-block')
     @content = document.createElement('div')
-    @content.classList.add(@const.packageClass)
+    @content.classList.add(@cst.packageClass)
 
     @appendChild(@content)
-
-    @activeItemSubscription = atom.workspace.onDidChangeActivePaneItem =>
-      @update()
-
     @update()
 
-  _contentOnclick: ->
-    @content.onclick = (event, element) =>
-      date = if @cycleDates and @showTomorrow then @tomorrowDate else @todayDate
-      shell.openExternal("#{ @baseUrl }/#{ @locationWoeid }/#{ date }/")
-
   _loadSettings: ->
+    @format = Format
+    @cst = new Const()
+
     # reads all the settings
-    @locationWoeid = atom.config.get(@const.SettingsLocationWoeid)
-    @cycleDates = atom.config.get(@const.SettingsCycleDates)
-    @showTemperature = atom.config.get(@const.SettingsShowTemperature)
-    @showHumidity = atom.config.get(@const.SettingsShowHumidity)
-    @showWind = atom.config.get(@const.SettingsShowWind)
-    @showPredictability = atom.config.get(@const.SettingsShowPredictability)
-    @showWeatherIcon = atom.config.get(@const.SettingsShowWeatherIcon)
-    @_getLocationData()
+    @locationWoeid = atom.config.get(@cst.SettingsLocationWoeid)
+    @locationName = atom.config.get(@cst.SettingsLocationName)
+    @cycleDates = atom.config.get(@cst.SettingsCycleDates)
+    @cycleTime = atom.config.get(@cst.SettingsCycleTime)
+    @showTemperature = atom.config.get(@cst.SettingsShowTemperature)
+    @showHumidity = atom.config.get(@cst.SettingsShowHumidity)
+    @showWind = atom.config.get(@cst.SettingsShowWind)
+    @showPredictability = atom.config.get(@cst.SettingsShowPredictability)
+    @showWeatherIcon = atom.config.get(@cst.SettingsShowWeatherIcon)
+    @updateTime = atom.config.get(@cst.SettingsUpdateTime)
 
+    # sets up dates
     [dd, mm, yyyy, tod, tom] = @_dateSettings()
-
     @todayDate = "#{ yyyy }/#{ mm }/#{ dd }"
     @todayDay = tod
     @tomorrowDate = "#{ yyyy }/#{ mm }/#{ dd+1 }"
     @tomorrowDay = tom
+
+    # finally, creates the api object
+    @_createApi()
+
+  _createApi: ->
+    # creates the api object without resolving it
+    @api = new API(
+      @locationWoeid,
+      @locationName,
+      @cycleDates,
+      "#{ @cst.apiUrl }/#{ @locationWoeid }/#{ @todayDate }/",
+      "#{ @cst.apiUrl }/#{ @locationWoeid }/#{ @tomorrowDate }/"
+    )
 
   _dateSettings: ->
     td = new Date()
@@ -69,57 +79,49 @@ class MetaweatherView extends HTMLElement
     mm = td.getMonth()+1
     yyyy = td.getFullYear()
 
-    tod = @const.wdays[td.getDay()]
-    tom = @const.wdays[td.getDay()+1]
+    tod = @cst.wdays[td.getDay()]
+    tom = @cst.wdays[td.getDay()+1]
     [dd, mm, yyyy, tod, tom]
 
-  _getLocationData: ->
-    loc = atom.config.get(@const.SettingsLocationName)
-    loc = if loc == '' then null else loc
-    self = @
-    if !loc?
-      # get from api
-      request.get { uri:"#{ @apiUrl }/#{ @locationWoeid }/", json: true },
-        (_, r, body) ->
-          if r.statusCode == 200
-            self.locationName = body['title']
-          else
-            console.log(r.statusMessage)
-    else
-      @locationName = loc
+  getLocationData: ->
+    @locationWoeid = @api.getWoeid()
+    @locationName = @api.getLocation()
+
+  _contentOnclick: ->
+    # adds a link to metaweather site
+    @content.onclick = (event, element) =>
+      date = if @cycleDates and @showTomorrow then @tomorrowDate else @todayDate
+      shell.openExternal("#{ @cst.baseUrl }/#{ @locationWoeid }/#{ date }/")
 
   _formatOutput: (data) ->
       # creates the output string
-      f = new @format(data[0], this)
+      day = if not data? then null else data[0]
+      f = new @format(day, @)
       f.get()
 
-  _getApiData: ->
-      # selects the correct url based on date and cycle setting
-      getDate = if @cycleDates and @showTomorrow then @tomorrowDate else @todayDate
-      [data, self] = ['-', @]
-      request.get { uri:"#{ @apiUrl }/#{ @locationWoeid }/#{ getDate }/", json: true },
-        (_, r, body) ->
-          if r.statusCode == 200
-            # success
-            data = self._formatOutput body
-          else
-            # TODO: better logging report to user
-            console.log(r.statusMessage)
-          self._writeData(data)
+  _writeData: ->
+      data = if @cycleDates and @showTomorrow then @api.getTomorrow() else @api.getToday()
+      @content.innerHTML = @_formatOutput data
+      @_contentOnclick() unless not data?
 
-  _writeData: (data)->
-      @showTomorrow = if @cycleDates then !@showTomorrow else @showTomorrow
-      @content.innerHTML = data
+      # doesn't loop unnecessarily
+      mustLoop = @cycleDates or not(@api.getTomorrow()? or @api.getToday())
+      if mustLoop
+        # switches between today and tomorrow, if
+        # every cycleTime
+        @showTomorrow = @cycleDates and not @showTomorrow
+        setTimeout @_writeData.bind(@), @cycleTime * @cst.SEC
 
   # Public: Updates the indicator.
   update: ->
-    if @locationWoeid?
-      @_getApiData()
-      @_contentOnclick()
-
-  # Tear down any state and detach
-  destroy: ->
-    @activeItemSubscription.dispose()
+    # api object will take care of refresh times
+    @api.refresh()
+    if not @locationWoeid?
+      @getLocationData()
+    # loops
+    @_writeData()
+    # re-updates every 30 minutes to avoid missing weather updates
+    setTimeout @update.bind(@), @updateTime * 60 * @cst.SEC
 
 
 module.exports = document.registerElement('status-bar-metaweather',

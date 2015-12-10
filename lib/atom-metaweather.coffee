@@ -11,18 +11,22 @@ class Metaweather
       default: 44418
     locationName:
       type: 'string'
-      default: ''
+      default: 'London'
     updateTime:
       type: 'integer'
-      default: 150
-      minimum: 60
+      default: 30
+      enum: [15, 30, 60, 120]
     position:
       type: 'string'
       default: 'right'
       enum: ['left', 'right']
     cycleDates:
       type: 'boolean'
-      default: true
+      default: false
+    cycleTime:
+      type: 'integer'
+      default: 30
+      enum: [30, 60, 120, 300]
     showTemperature:
       type: 'boolean'
       default: true
@@ -39,6 +43,7 @@ class Metaweather
       type: 'boolean'
       default: false
 
+
   # Private: Metaweather view.
   view: null
 
@@ -54,22 +59,32 @@ class Metaweather
 
   # Public: Deactivates the package.
   deactivate: ->
-    @subscriptions?.dispose()
     @destroyTile()
 
   # Private: Destroys the status bar indicator view and its tile.
   destroyTile: ->
-    @view?.destroy()
+    @subscriptions?.dispose()
+    @view?.content.InnerHTML = ''
     @view = null
     @tile?.destroy()
     @tile = null
 
   # Private: Creates the set of event observers.
   observeEvents: ->
+    settingsValues = [
+      "atom-metaweather.showTemperature",
+      "atom-metaweather.showHumidity",
+      "atom-metaweather.showWind",
+      "atom-metaweather.showPredictability",
+      "atom-metaweather.showWeatherIcon",
+      "atom-metaweather.position",
+    ]
     @subscriptions = new CompositeDisposable
-    @subscriptions.add atom.config.onDidChange =>
-      @destroyTile()
-      @updateTile()
+    for index of settingsValues
+      @subscriptions.add atom.config.onDidChange settingsValues[index], =>
+        console.log("#{ settingsValues[index] } changed, reloading...")
+        @destroyTile()
+        @updateTile()
 
   # Private: Updates the status bar indicator view and its tile.
   updateTile: ->
@@ -79,8 +94,8 @@ class Metaweather
     @view.initialize(@statusBar)
 
     if atom.config.get('atom-metaweather.position') is 'right'
-      @tile = @statusBar.addRightTile(item: @view, priority: priority)
+      @tile = @statusBar?.addRightTile(item: @view, priority: priority)
     else
-      @tile = @statusBar.addLeftTile(item: @view, priority: priority)
+      @tile = @statusBar?.addLeftTile(item: @view, priority: priority)
 
 module.exports = new Metaweather
