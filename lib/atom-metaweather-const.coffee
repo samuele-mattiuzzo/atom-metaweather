@@ -6,7 +6,7 @@ class Const
   SettingsLocationName: 'atom-metaweather.locationName'
   SettingsLocationWoeid: 'atom-metaweather.location'
   SettingsCycleDates: 'atom-metaweather.cycleDates'
-  SettingsCyccleTime: 'atom-metaweather.cycleTime'
+  SettingsCycleTime: 'atom-metaweather.cycleTime'
   SettingsShowTemperature: 'atom-metaweather.showTemperature'
   SettingsShowHumidity: 'atom-metaweather.showHumidity'
   SettingsShowWind: 'atom-metaweather.showWind'

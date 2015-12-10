@@ -43,6 +43,7 @@ class Metaweather
       type: 'boolean'
       default: false
 
+
   # Private: Metaweather view.
   view: null
 
@@ -64,8 +65,6 @@ class Metaweather
   destroyTile: ->
     @subscriptions?.dispose()
     @view.content.InnerHTML = ''
-    @view.apiTimer = null
-    @view.uiTimer = null
     @view = null
     @tile?.destroy()
     @tile = null
