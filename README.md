@@ -12,17 +12,17 @@ Status bar with all elements:
 
 ## Configuration
 
-* `location [^1]` &mdash; WOEID of the location (see [next section](#get-woeid-value-from-metaweathercom)). (TBD: Leave blank to automatically fetch from the user's current location)
-* `locationName [^1]` &mdash; Name of the location. Leave blank to automatically fetch from API
+* `location `[^1] &mdash; WOEID of the location (see [next section](#get-woeid-value-from-metaweathercom)). (TBD: Leave blank to automatically fetch from the user's current location)
+* `locationName `[^1] &mdash; Name of the location. Leave blank to automatically fetch from API
 * `showTemperature` &mdash; Shows the temperature meter [`true`, `false`]
 * `showWeatherIcon` &mdash; Shows the weather state icon [`true`, `false`]
 * `showWind` &mdash; Shows the wind speed meter [`true`, `false`]
 * `showHumidity` &mdash; Shows the humidity meter [`true`, `false`]
 * `showPredictability` &mdash; Shows an indicator for the validity of a prediction (red=bad, yellow=average, green=good)[`true`, `false`]
 * `position` &mdash; Control the placement of the meters [`left`, `right`]
-* `cycleDates [^1]` &mdash; Allow cycling through today/tomorrow (default `true`)
-* `cycleTime [^1]` &mdash; Control the refresh time in seconds between today and tomorrow dates cycle [30, 60, 120, 300]
-* `updateTime [^1]` &mdash; Control the API refresh time in minutes [15, 30, 60, 120]
+* `cycleDates `[^1] &mdash; Allow cycling through today/tomorrow (default `true`)
+* `cycleTime `[^1] &mdash; Control the refresh time in seconds between today and tomorrow dates cycle [30, 60, 120, 300]
+* `updateTime `[^1] &mdash; Control the API refresh time in minutes [15, 30, 60, 120]
 
 ``
 
