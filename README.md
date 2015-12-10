@@ -24,7 +24,6 @@ Status bar with all elements:
 * `cycleTime `<sup>[\*](#settingsrestart)</sup> &mdash; Control the refresh time in seconds between today and tomorrow dates cycle [30, 60, 120, 300]
 * `updateTime `<sup>[\*](#settingsrestart)</sup> &mdash; Control the API refresh time in minutes [15, 30, 60, 120]
 
-``
 
 ### Get WOEID value from metaweather
 
