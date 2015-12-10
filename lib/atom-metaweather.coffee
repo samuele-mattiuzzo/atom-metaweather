@@ -22,7 +22,7 @@ class Metaweather
       enum: ['left', 'right']
     cycleDates:
       type: 'boolean'
-      default: true
+      default: false
     cycleTime:
       type: 'integer'
       default: 30

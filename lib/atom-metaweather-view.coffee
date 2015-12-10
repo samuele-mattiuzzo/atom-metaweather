@@ -102,7 +102,7 @@ class MetaweatherView extends HTMLElement
   _writeData: ->
       data = if @cycleDates and @showTomorrow then @api.getTomorrow() else @api.getToday()
       @content.innerHTML = @_formatOutput data
-      @_contentOnclick()
+      @_contentOnclick() unless not data?
 
       # doesn't loop unnecessarily
       mustLoop = @cycleDates or not(@api.getTomorrow()? or @api.getToday())

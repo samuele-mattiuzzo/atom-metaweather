@@ -1,5 +1,5 @@
 class Format
-  data = []
+  data: null
 
 
   constructor: (data, obj) ->
@@ -8,47 +8,46 @@ class Format
 
   _formatPre: ->
     # composes the final message and writes it in the status bar
-    tagOpen = "<span class='location'>"
-    tagClose= "</span>"
-    result = ""
+    [tagOpen, tagClose] = ["<span class='location'>", "</span>"]
     if @obj.locationName?
       day = if not @obj.showTomorrow then @obj.todayDay else @obj.tomorrowDay
       loc = @obj.locationName.substring(0,3).toUpperCase()
-      result = "<span class='title'>#{ loc }</span> #{ day }"
-    result = if result.length then result else '-'
-    "#{ tagOpen }#{ result }#{ tagClose }"
+      "#{ tagOpen }<span class='title'>#{ loc }</span> #{ day }#{ tagClose }"
+    else
+      "#{ tagOpen }-#{ tagClose }"
 
   _formatTemperature: ->
     # temperature?
-    result = ""
     if @obj.showTemperature
-      result = "<span class='temperature'> #{ parseInt(@data['the_temp']) }</span>"
+      "<span class='temperature'> #{ parseInt(@data['the_temp']) }</span>"
+    else
+      ""
 
+  _formatWeatherIcon: ->
     # glyph
     if @obj.showWeatherIcon?
       glyphClass = "state-#{ @data['weather_state_abbr'] }"
-      result += " <span class='#{ glyphClass }'></span>"
-
-    result
+      " <span class='#{ glyphClass }'></span>"
+    else
+      ""
 
   _formatWind: ->
     # wind?
-    result = ""
     if @obj.showWind
       cls = @data['wind_direction_compass'].toLowerCase()
-      result = " <span class='dir-#{ cls }'><span class='wind'>#{ parseInt(@data['wind_speed']) }</span></span>"
-    result
+      " <span class='dir-#{ cls }'><span class='wind'>#{ parseInt(@data['wind_speed']) }</span></span>"
+    else
+      ""
 
   _formatHumidity: ->
     # humidity?
-    result = ""
     if @obj.showHumidity
-      result = "<span class='humidity'> #{ parseInt(@data['humidity']) }</span>"
-    result
+      "<span class='humidity'> #{ parseInt(@data['humidity']) }</span>"
+    else
+      ""
 
   _formatPredictability: ->
     # indicator
-    result = ""
     if @obj.showPredictability
       prdClass = 'avg'
       prd = parseInt(@data['predictability'])
@@ -56,23 +55,21 @@ class Format
           prdClass = 'bad'
       else if prd > 70
           prdClass = 'good'
-      result = " <span class='predict-#{ prdClass }''></span>"
-    result
+      " <span class='predict-#{ prdClass }''></span>"
+    else
+      ""
 
   _formatAll: ->
-    tagOpen = "<span class='stats'>"
-    tagClose= "</span>"
-    result = '-'
+    [tagOpen, tagClose] = ["<span class='stats'>", "</span>"]
     if @data?
       temperature = @_formatTemperature()
       wind = @_formatWind()
       humidity = @_formatHumidity()
       predict = @_formatPredictability()
       result = "#{ temperature}#{ humidity }#{ wind }#{ predict }"
-      result = if result.length then result else '-'
+      "#{ tagOpen }#{ result }#{ tagClose }"
     else
-      result
-    "#{ tagOpen }#{ result }#{ tagClose }"
+      "#{ tagOpen }-#{ tagClose }"
 
   get: ->
     pre = @_formatPre()
