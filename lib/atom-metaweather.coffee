@@ -63,16 +63,29 @@ class Metaweather
   # Private: Destroys the status bar indicator view and its tile.
   destroyTile: ->
     @subscriptions?.dispose()
+    @view.content.InnerHTML = ''
+    @view.apiTimer = null
+    @view.uiTimer = null
     @view = null
     @tile?.destroy()
     @tile = null
 
   # Private: Creates the set of event observers.
   observeEvents: ->
+    settingsValues = [
+      "atom-metaweather.showTemperature",
+      "atom-metaweather.showHumidity",
+      "atom-metaweather.showWind",
+      "atom-metaweather.showPredictability",
+      "atom-metaweather.showWeatherIcon",
+      "atom-metaweather.position",
+    ]
     @subscriptions = new CompositeDisposable
-    @subscriptions.add atom.config.onDidChange =>
-      @destroyTile()
-      @updateTile()
+    for index of settingsValues
+      @subscriptions.add atom.config.onDidChange settingsValues[index], =>
+        console.log("#{ settingsValues[index] } changed, reloading...")
+        @destroyTile()
+        @updateTile()
 
   # Private: Updates the status bar indicator view and its tile.
   updateTile: ->

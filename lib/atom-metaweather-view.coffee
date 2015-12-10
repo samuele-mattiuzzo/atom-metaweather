@@ -25,6 +25,9 @@ class MetaweatherView extends HTMLElement
   showHumidity: false
   showPredictability: false
 
+  apiTimer: null
+  uiTimer: null
+
 
   initialize: (@statusBar) ->
     @_loadSettings()
@@ -105,7 +108,7 @@ class MetaweatherView extends HTMLElement
       # switches between today and tomorrow, if
       # every 5 minutes
       @showTomorrow = @cycleDates and not @showTomorrow
-      setTimeout @writeData.bind(@), @cycleTime * @cst.SEC
+      @uiTimer = setTimeout @writeData.bind(@), @cycleTime * @cst.SEC
 
   # Public: Updates the indicator.
   update: ->
@@ -116,7 +119,7 @@ class MetaweatherView extends HTMLElement
     # loops
     @writeData()
     # re-updates every 30 minutes to avoid missing weather updates
-    setTimeout @update.bind(@), @updateTime * @cst.SEC
+    @apiTimer = setTimeout @update.bind(@), @updateTime * 60 * @cst.SEC
 
 
 module.exports = document.registerElement('status-bar-metaweather',
