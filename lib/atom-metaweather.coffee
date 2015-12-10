@@ -81,7 +81,6 @@ class Metaweather
     @subscriptions = new CompositeDisposable
     for index of settingsValues
       @subscriptions.add atom.config.onDidChange settingsValues[index], =>
-        console.log("#{ settingsValues[index] } changed, reloading...")
         @destroyTile()
         @updateTile()
 
