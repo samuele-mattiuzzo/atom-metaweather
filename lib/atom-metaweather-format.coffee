@@ -63,10 +63,11 @@ class Format
     [tagOpen, tagClose] = ["<span class='stats'>", "</span>"]
     if @data?
       temperature = @_formatTemperature()
+      icon = @_formatWeatherIcon()
       wind = @_formatWind()
       humidity = @_formatHumidity()
       predict = @_formatPredictability()
-      result = "#{ temperature}#{ humidity }#{ wind }#{ predict }"
+      result = "#{ temperature}#{ icon }#{ humidity }#{ wind }#{ predict }"
       "#{ tagOpen }#{ result }#{ tagClose }"
     else
       "#{ tagOpen }-#{ tagClose }"
