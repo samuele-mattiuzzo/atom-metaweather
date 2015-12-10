@@ -1,3 +1,7 @@
+## 0.4.0 - Implements refresh timers and events
+* Implements refresh timers and events
+* Cleans code
+
 ## 0.3.1 - Cleans code
 * Links to metaweather.com
 * Other minor updates to README and package.json
