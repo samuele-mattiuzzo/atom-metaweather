@@ -64,7 +64,7 @@ class Metaweather
   # Private: Destroys the status bar indicator view and its tile.
   destroyTile: ->
     @subscriptions?.dispose()
-    @view.content.InnerHTML = ''
+    @view?.content.InnerHTML = ''
     @view = null
     @tile?.destroy()
     @tile = null
