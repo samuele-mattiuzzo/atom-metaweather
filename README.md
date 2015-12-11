@@ -10,7 +10,7 @@ Status bar with all elements:
 ![Atom Metaweather 0.4.0 in action](https://github.com/samuele-mattiuzzo/atom-metaweather/blob/master/screenshot.png?raw=true)
 
 
-## Configuration
+### Configuration
 
 * `location `<sup>[\*](#settingsrestart)</sup> &mdash; WOEID of the location (see [next section](#get-woeid-value-from-metaweathercom)). (TBD: Leave blank to automatically fetch from the user's current location)
 * `locationName `<sup>[\*](#settingsrestart)</sup> &mdash; Name of the location. Leave blank to automatically fetch from API
@@ -25,7 +25,7 @@ Status bar with all elements:
 * `updateTime `<sup>[\*](#settingsrestart)</sup> &mdash; Control the API refresh time in minutes [15, 30, 60, 120]
 
 
-### Get WOEID value from metaweather
+##### Get WOEID value from metaweather
 
 The [WOEID](https://developer.yahoo.com/geo/geoplanet/guide/concepts.html) number is a location identifier used by this package to query the API service.
 To get your city's number, visit https://www.metaweather.com/api/#locationsearch and follow the instructions:
@@ -35,20 +35,23 @@ To get your city's number, visit https://www.metaweather.com/api/#locationsearch
 - [optional] you can use the `title` response field to populate locationName
 
 
-## Credits
+### Credits
 
 All weather data and icons are taken from [metaweather.com](https://www.metaweather.com)
 
 
-## Copyright
+### Copyright
 
 Copyright &copy; 2014-2015 [Samuele Mattiuzzo](https://samuele-mattiuzzo.github.io).
 
 
-
+___
 <sup>
 <a name="settingsrestart">\*</a> _Changing this setting requires restart_
+
 [_License_](https://github.com/samuele-mattiuzzo/atom-metaweather/blob/master/LICENSE.md)
+
 [_Changelog_](https://github.com/samuele-mattiuzzo/atom-metaweather/blob/master/CHANGELOG.md)
+
 [_Roadmap_](https://github.com/samuele-mattiuzzo/atom-metaweather/blob/master/ROADMAP.md)
 </sup>
