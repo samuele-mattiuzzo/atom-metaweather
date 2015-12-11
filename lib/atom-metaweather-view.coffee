@@ -1,4 +1,4 @@
-shell = require('shell')
+shell = require 'shell'
 
 Format = require './atom-metaweather-format'
 Const = require './atom-metaweather-const'

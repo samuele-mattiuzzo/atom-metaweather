@@ -1,4 +1,4 @@
-request = require('request-promise')
+request = require 'request-promise'
 Const = require './atom-metaweather-const'
 
 class API
