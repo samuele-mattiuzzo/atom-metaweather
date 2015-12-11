@@ -45,6 +45,10 @@ All weather data and icons are taken from [metaweather.com](https://www.metaweat
 Copyright &copy; 2014-2015 [Samuele Mattiuzzo](https://samuele-mattiuzzo.github.io).
 
 
-### Footnotes
 
+<sup>
 <a name="settingsrestart">\*</a> _Changing this setting requires restart_
+[_License_](https://github.com/samuele-mattiuzzo/atom-metaweather/blob/master/LICENSE.md)
+[_Changelog_](https://github.com/samuele-mattiuzzo/atom-metaweather/blob/master/CHANGELOG.md)
+[_Roadmap_](https://github.com/samuele-mattiuzzo/atom-metaweather/blob/master/ROADMAP.md)
+</sup>
