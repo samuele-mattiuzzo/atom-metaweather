@@ -15,14 +15,32 @@ describe "Metaweather", ->
     atom.config.set('atom-metaweather.position', 'left')
     waitsForPromise -> atom.packages.activatePackage('status-bar')
     waitsForPromise -> atom.packages.activatePackage('atom-metaweather')
-    waitsForPromise -> atom.packages.activatePackage('language-gfm')
 
     runs ->
       atom.config.set('atom-metaweather.position', "right")
       atom.config.set('atom-metaweather.location', 44418)
+      settings = ['showTemperature', 'showHumidity', 'showWind']
+      for index in settings
+          atom.config.set("atom-metaweather.#{ settings[index] }", true)
       atom.packages.emitter.emit('did-activate-all')
 
       weather = Metaweather.view
+      spyOn(weather.api, 'timeToRefresh').andCallFake ->
+        true
+      spyOn(weather.api, 'setLocation').andCallFake ->
+        weather.api.woeid = 44418
+        weather.api.location = 'London'
+      spyOn(weather.api, 'setApiData').andCallFake ->
+        weather.api.todayData = [{
+            "weather_state_name": "Heavy Cloud",
+            "weather_state_abbr": "hc",
+            "wind_direction_compass": "SW",
+            "the_temp": 12.265000000000001,
+            "wind_speed": 24.026236683333334,
+            "humidity": 72,
+            "predictability": 71}]
+        weather.api.tomorrowData = weather.api.todayData
+      weather.api.refresh()
 
   describe '::initialize', ->
     it 'displays in the status bar', ->
@@ -32,13 +50,13 @@ describe "Metaweather", ->
     it 'is correctly positioned', ->
       expect(weather.parentNode.classList.contains('status-bar-right')).toBeTruthy()
 
+    it 'contains the data', ->
+      expect((weather.getElementsByClassName 'stats')[0]).toBeTruthy()
+
   describe '::deactivate', ->
     it 'removes the weather view', ->
-      weather = Metaweather.view
       expect(weather).toExist()
-
       atom.packages.deactivatePackage('atom-metaweather')
-
       expect(Metaweather.view).toBeNull()
 
     it 'can be executed twice', ->
@@ -48,5 +66,12 @@ describe "Metaweather", ->
   describe 'when the configuration changes', ->
     it 'moves the weather', ->
       atom.config.set('atom-metaweather.position', 'right')
-      weather = Metaweather.view
       expect(weather.parentNode.classList.contains('status-bar-right')).toBeTruthy()
+
+    it 'hides the relative item', ->
+      settings = ['showTemperature', 'showHumidity', 'showWind']
+      classes = ['temperature', 'humidity', 'wind']
+
+      for index in settings
+        atom.config.set("atom-metaweather.#{ settings[index] }", false)
+        expect((weather.getElementsByClassName classes[index])[0]).toBe(undefined)
