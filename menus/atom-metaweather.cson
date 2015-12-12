@@ -5,12 +5,8 @@
       'label': 'Atom Metaweather'
       'submenu': [
         {
-          'label': 'Toggle'
-          'command': 'atom-metaweather:toggle'
-        },
-        {
-          'label': 'Settings'
-          'command': 'atom-metaweather:settings'
+          'label': 'Refresh API'
+          'command': 'atom-metaweather:refresh'
         }
       ]
     ]

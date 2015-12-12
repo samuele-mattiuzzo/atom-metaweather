@@ -68,6 +68,10 @@ class Metaweather
     @tile?.destroy()
     @tile = null
 
+  refresh: ->
+    @destroyTile()
+    @updateTile()
+
   # Private: Creates the set of event observers.
   observeEvents: ->
     settingsValues = [
@@ -83,6 +87,9 @@ class Metaweather
       @subscriptions.add atom.config.onDidChange settingsValues[index], =>
         @destroyTile()
         @updateTile()
+
+    @subscriptions.add atom.commands.add 'atom-workspace',
+      'atom-metaweather:refresh': => @refresh()
 
   # Private: Updates the status bar indicator view and its tile.
   updateTile: ->

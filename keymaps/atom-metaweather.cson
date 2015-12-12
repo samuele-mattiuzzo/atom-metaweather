@@ -1,2 +1,2 @@
 'atom-workspace':
-  'ctrl-alt-w': 'atom-metaweather:toggle'
+  'ctrl-alt-w': 'atom-metaweather:refresh'

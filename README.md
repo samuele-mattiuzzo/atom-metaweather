@@ -10,9 +10,14 @@ Status bar with all elements:
 ![Atom Metaweather 0.4.0 in action](https://github.com/samuele-mattiuzzo/atom-metaweather/blob/master/screenshot.png?raw=true)
 
 
+### Keymaps
+
+* `ctrl-alt-w` refreshes the weather API
+
+
 ### Configuration
 
-* `location `<sup>[\*](#settingsrestart)</sup> &mdash; WOEID of the location (see [next section](#get-woeid-value-from-metaweathercom)). (TBD: Leave blank to automatically fetch from the user's current location)
+* `location `<sup>[\*](#settingsrestart)</sup> &mdash; WOEID of the location ( [?](#get-woeid-value-from-metaweathercom)). (TBD: Leave blank to automatically fetch from the user's current location)
 * `locationName `<sup>[\*](#settingsrestart)</sup> &mdash; Name of the location. Leave blank to automatically fetch from API
 * `showTemperature` &mdash; Shows the temperature meter [`true`, `false`]
 * `showWeatherIcon` &mdash; Shows the weather state icon [`true`, `false`]
