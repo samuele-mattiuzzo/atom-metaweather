@@ -39,22 +39,37 @@ class API
         true
 
     setLocation: ->
+      @_getLocationUser()
       if not @location?
         if @woeid?
-          @_getLocationWoeid(@woeid).bind(@)
+          @_getLocationWoeid(@woeid)
         else
-          @_getLocationUser().bind(@)
+          @_getLocationUser()
 
     _getLocationWoeid: (woeid)->
-      request({ uri:"#{ self.cst.apiUrl }/#{ woeid }/", json: true })
-      .then(( body)=>
+      request({ uri:"#{ @cst.apiUrl }/#{ woeid }/", json: true })
+      .then( (body)=>
         [@woeid, @location] = [body['woeid'], body['title']]
       )
-      .catch((err) => console.log('[ERROR] GET location:  #{ error }') )
+      .catch( (err) => console.log("[ERROR] GET location:  #{ err }") )
 
     _getLocationUser: ->
-      # TODO: Implement me!
-      @_getLocationWoeid('44418')
+      geoloc = window.navigator.geolocation
+      if geoloc
+        geoloc.getCurrentPosition (pos)=>
+          latlong = "#{ pos.coords.latitude },#{ pos.coords.longitude }"
+          request({ uri:"#{ @cst.apiUrl }/search/?lattlong=#{ latlong }", json: true })
+          .then( (body)=>
+            # gets the closest one
+            [@woeid, @location] = [body[0]['woeid'], body[0]['title']]
+          )
+          .catch( (err) =>
+            console.log("[ERROR] GET auto location:  #{ err }")
+            @_getLocationWoeid('44418')
+          )
+      else
+        # defaults to london
+        @_getLocationWoeid('44418')
 
     setApiData: ->
       if not @todayData?
@@ -64,11 +79,11 @@ class API
 
     _getData: (url, day) ->
       request({uri:url, json:true})
-      .then((body) =>
+      .then( (body) =>
         @["#{ day }Data"] = body
         @lastChecked = new Date()
       )
-      .catch((err) => console.log('[ERROR] GET #{ url }:  #{ error }') )
+      .catch( (err) => console.log("[ERROR] GET #{ url }:  #{ err }") )
 
     # Getters
     getWoeid: ->
