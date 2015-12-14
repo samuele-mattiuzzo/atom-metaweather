@@ -30,12 +30,20 @@ class Metaweather
     showTemperature:
       type: 'boolean'
       default: true
+    temperatureMeasure:
+      type: 'string'
+      default: 'C'
+      enum: ['C', 'F']
     showWeatherIcon:
       type: 'boolean'
       default: true
     showWind:
       type: 'boolean'
       default: false
+    windMeasure:
+      type: 'string'
+      default: 'MPH'
+      enum: ['MPH', 'KPH']
     showHumidity:
       type: 'boolean'
       default: false
