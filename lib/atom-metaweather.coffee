@@ -92,6 +92,9 @@ class Metaweather
       "atom-metaweather.showPredictability",
       "atom-metaweather.showWeatherIcon",
       "atom-metaweather.position",
+      "atom-metaweather.autoLocation",
+      "atom-metaweather.windMeasure",
+      "atom-metaweather.temperatureMeasure",
     ]
     @subscriptions = new CompositeDisposable
     for index of settingsValues

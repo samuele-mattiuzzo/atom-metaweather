@@ -32,6 +32,13 @@ Status bar with all elements:
 * `cycleTime `<sup>[\*](#settingsrestart)</sup> &mdash; Control the refresh time in seconds between today and tomorrow dates cycle [`30`, `60`, `120`, `300`]
 * `updateTime `<sup>[\*](#settingsrestart)</sup> &mdash; Control the API refresh time in minutes [`15`, `30`, `60`, `120`]
 
+Changing settings will take `updateTime` seconds
+
+<sup>
+<a name="settingsrestart">\*</a> _Changing this setting requires restart_
+
+</sup>
+
 
 ##### Get WOEID value from metaweather
 
@@ -55,7 +62,6 @@ Copyright &copy; 2014-2015 [Samuele Mattiuzzo](https://samuele-mattiuzzo.github.
 
 ___
 <sup>
-<a name="settingsrestart">\*</a> _Changing this setting requires restart_
 
 [_License_](https://github.com/samuele-mattiuzzo/atom-metaweather/blob/master/LICENSE.md)
 
