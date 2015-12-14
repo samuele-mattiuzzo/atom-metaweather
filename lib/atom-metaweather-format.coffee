@@ -16,10 +16,17 @@ class Format
     else
       "#{ tagOpen }-#{ tagClose }"
 
+  _getTemp: ->
+    temp = parseInt(@data['the_temp'])
+    if @obj.temperatureMeasure == 'F'
+      temp = (temp * 9/5) + 32
+    [parseInt(temp), @obj.temperatureMeasure]
+
   _formatTemperature: ->
     # temperature?
     if @obj.showTemperature
-      "<span class='temperature'> #{ parseInt(@data['the_temp']) }</span>"
+      [temperature, t_class] = @_getTemp()
+      "<span class='temperature-#{ t_class }'> #{ temperature }</span>"
     else
       ""
 
@@ -31,11 +38,18 @@ class Format
     else
       ""
 
+  _getWind: ->
+    wind_speed = parseInt(@data['wind_speed'])
+    if @obj.windMeasure == 'KPH'
+      wind_speed = wind_speed * 1.61
+    [parseInt(wind_speed), @obj.windMeasure]
+
   _formatWind: ->
     # wind?
     if @obj.showWind
+      [wind_speed, w_class] = @_getWind()
       cls = @data['wind_direction_compass'].toLowerCase()
-      " <span class='dir-#{ cls }'><span class='wind'>#{ parseInt(@data['wind_speed']) }</span></span>"
+      " <span class='dir-#{ cls }'><span class='wind-#{ w_class }'>#{ wind_speed }</span></span>"
     else
       ""
 
