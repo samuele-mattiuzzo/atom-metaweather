@@ -40,13 +40,12 @@ class API
 
     setLocation: ->
       # explicit so we're sure to not miss a case
-      # default returns empty
-      if @woeid? and not @location?
-        @_getLocationWoeid(@woeid)
-      else if not @woeid? and not @location?
+      # default means both are already set
+      if atom.config.get(@cst.SettingsAutoLocation) or not @woeid?
         @_getLocationUser()
-      else if @location? and not @woeid?
-        @_getLocationWoeid('44418')
+      else
+        if @woeid? and not @location?
+          @_getLocationWoeid(@woeid)
 
     _getLocationWoeid: (woeid)->
       request({ uri:"#{ @cst.apiUrl }/#{ woeid }/", json: true })

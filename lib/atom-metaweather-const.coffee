@@ -5,6 +5,7 @@ class Const
   statusBarClass: 'status-bar-metaweather'
   SettingsLocationName: 'atom-metaweather.locationName'
   SettingsLocationWoeid: 'atom-metaweather.location'
+  SettingsAutoLocation: 'atom-metaweather.autoLocation'
   SettingsCycleDates: 'atom-metaweather.cycleDates'
   SettingsCycleTime: 'atom-metaweather.cycleTime'
   SettingsShowTemperature: 'atom-metaweather.showTemperature'
