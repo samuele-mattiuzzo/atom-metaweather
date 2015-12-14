@@ -12,6 +12,9 @@ class Metaweather
     locationName:
       type: 'string'
       default: 'London'
+    autoLocation:
+      type: 'boolean'
+      default: false
     updateTime:
       type: 'integer'
       default: 30

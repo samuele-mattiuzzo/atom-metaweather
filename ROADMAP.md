@@ -1,4 +1,4 @@
-## 1.0.0 - First major release
-* First major release!
+* Add a more solid test suite
 * Coverage is > 80%
-* Allows automatic location fetching
+* Allow on-hover menu with more info
+* Allow to save favourite locations

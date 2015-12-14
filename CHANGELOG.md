@@ -1,4 +1,7 @@
-## [0.5.0](https://github.com/samuele-mattiuzzo/atom-metaweather/tree/v0.4.6) - Adds units measure settings
+## [0.6.0](https://github.com/samuele-mattiuzzo/atom-metaweather/tree/v0.6.0) - Adds auto location fetching
+* Allows to automatically fetch both `woeid` and `location` for the user using the `navigator` object
+
+## [0.5.0](https://github.com/samuele-mattiuzzo/atom-metaweather/tree/v0.5.0) - Adds units measure settings
 * `C` or `F` for temperature
 * `kph` or `mph` for wind speed
 
