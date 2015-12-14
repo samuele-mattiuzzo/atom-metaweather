@@ -7,7 +7,7 @@ and uses [metaweather.com](https://www.metaweather.com) API data.
 
 Status bar with all elements:
 
-![Atom Metaweather 0.4 in action](https://github.com/samuele-mattiuzzo/atom-metaweather/blob/master/screenshot.png?raw=true)
+![Atom Metaweather 0.5.0 in action](https://github.com/samuele-mattiuzzo/atom-metaweather/blob/master/screenshot.png?raw=true)
 
 
 ### Keymaps
@@ -20,14 +20,16 @@ Status bar with all elements:
 * `location `<sup>[\*](#settingsrestart)</sup> &mdash; WOEID of the location ( [?](#get-woeid-value-from-metaweathercom)). (TBD: Leave blank to automatically fetch from the user's current location)
 * `locationName `<sup>[\*](#settingsrestart)</sup> &mdash; Name of the location. Leave blank to automatically fetch from API
 * `showTemperature` &mdash; Shows the temperature meter [`true`, `false`]
+* `temperatureMeasure` &mdash; Selects between Celsius or Farenheit [`C`, `F`]
 * `showWeatherIcon` &mdash; Shows the weather state icon [`true`, `false`]
 * `showWind` &mdash; Shows the wind speed meter [`true`, `false`]
+* `windMeasure` &mdash; Selects between Kilometers or Miles per hour [`kph`, `mph`]
 * `showHumidity` &mdash; Shows the humidity meter [`true`, `false`]
-* `showPredictability` &mdash; Shows an indicator for the validity of a prediction (red=bad, yellow=average, green=good)[`true`, `false`]
+* `showPredictability` &mdash; Shows an indicator for the validity of a prediction _(red=bad, yellow=average, green=good)_ [`true`, `false`]
 * `position` &mdash; Control the placement of the meters [`left`, `right`]
-* `cycleDates `<sup>[\*](#settingsrestart)</sup> &mdash; Allow cycling through today/tomorrow (default `true`)
-* `cycleTime `<sup>[\*](#settingsrestart)</sup> &mdash; Control the refresh time in seconds between today and tomorrow dates cycle [30, 60, 120, 300]
-* `updateTime `<sup>[\*](#settingsrestart)</sup> &mdash; Control the API refresh time in minutes [15, 30, 60, 120]
+* `cycleDates `<sup>[\*](#settingsrestart)</sup> &mdash; Allow cycling through today/tomorrow [`true`, `false`]
+* `cycleTime `<sup>[\*](#settingsrestart)</sup> &mdash; Control the refresh time in seconds between today and tomorrow dates cycle [`30`, `60`, `120`, `300`]
+* `updateTime `<sup>[\*](#settingsrestart)</sup> &mdash; Control the API refresh time in minutes [`15`, `30`, `60`, `120`]
 
 
 ##### Get WOEID value from metaweather

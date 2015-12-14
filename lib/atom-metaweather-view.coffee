@@ -20,8 +20,10 @@ class MetaweatherView extends HTMLElement
   cycleTime: null
   showTomorrow: null
   showTemperature: null
+  temperatureMeasure: null
   showWeatherIcon: null
   showWind: null
+  windMeasure: null
   showHumidity: null
   showPredictability: null
   updateTime: null
@@ -47,8 +49,10 @@ class MetaweatherView extends HTMLElement
     @cycleDates = atom.config.get(@cst.SettingsCycleDates)
     @cycleTime = atom.config.get(@cst.SettingsCycleTime)
     @showTemperature = atom.config.get(@cst.SettingsShowTemperature)
+    @temperatureMeasure = atom.config.get(@cst.SettingsTemperatureMeasure)
     @showHumidity = atom.config.get(@cst.SettingsShowHumidity)
     @showWind = atom.config.get(@cst.SettingsShowWind)
+    @windMeasure = atom.config.get(@cst.SettingsWindMeasure)
     @showPredictability = atom.config.get(@cst.SettingsShowPredictability)
     @showWeatherIcon = atom.config.get(@cst.SettingsShowWeatherIcon)
     @updateTime = atom.config.get(@cst.SettingsUpdateTime)

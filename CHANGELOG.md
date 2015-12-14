@@ -1,3 +1,7 @@
+## [0.5.0](https://github.com/samuele-mattiuzzo/atom-metaweather/tree/v0.4.6) - Adds units measure settings
+* `C` or `F` for temperature
+* `kph` or `mph` for wind speed
+
 ## [0.4.5](https://github.com/samuele-mattiuzzo/atom-metaweather/tree/v0.4.5) - Adds more menus
 * `ctrl-alt-w` is now used to refresh the API
 

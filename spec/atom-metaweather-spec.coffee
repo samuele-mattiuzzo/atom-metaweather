@@ -40,7 +40,6 @@ describe "Metaweather", ->
             "humidity": 72,
             "predictability": 71}]
         weather.api.tomorrowData = weather.api.todayData
-      weather.api.refresh()
 
   describe '::initialize', ->
     it 'displays in the status bar', ->
@@ -70,7 +69,7 @@ describe "Metaweather", ->
 
     it 'hides the relative item', ->
       settings = ['showTemperature', 'showHumidity', 'showWind']
-      classes = ['temperature', 'humidity', 'wind']
+      classes = ['temperature-C', 'humidity', 'wind-KPH']
 
       for index in settings
         atom.config.set("atom-metaweather.#{ settings[index] }", false)
