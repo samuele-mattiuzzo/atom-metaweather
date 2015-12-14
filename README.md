@@ -17,8 +17,9 @@ Status bar with all elements:
 
 ### Configuration
 
-* `location `<sup>[\*](#settingsrestart)</sup> &mdash; WOEID of the location ( [?](#get-woeid-value-from-metaweathercom)). (TBD: Leave blank to automatically fetch from the user's current location)
-* `locationName `<sup>[\*](#settingsrestart)</sup> &mdash; Name of the location. Leave blank to automatically fetch from API
+* `location `<sup>[\*](#settingsrestart)</sup> &mdash; WOEID of the location ( [?](#get-woeid-value-from-metaweathercom))
+* `locationName `<sup>[\*](#settingsrestart)</sup> &mdash; Name of the location. Leave blank to automatically fetch from API (requires `location` to be set)
+* `autoLocation` &mdash; Switches auto location fetching on/off [`true`, `false`] (overwrites `location` and `locationName`)
 * `showTemperature` &mdash; Shows the temperature meter [`true`, `false`]
 * `temperatureMeasure` &mdash; Selects between Celsius or Farenheit [`C`, `F`]
 * `showWeatherIcon` &mdash; Shows the weather state icon [`true`, `false`]
