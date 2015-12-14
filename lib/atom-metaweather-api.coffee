@@ -39,12 +39,14 @@ class API
         true
 
     setLocation: ->
-      @_getLocationUser()
-      if not @location?
-        if @woeid?
-          @_getLocationWoeid(@woeid)
-        else
-          @_getLocationUser()
+      # explicit so we're sure to not miss a case
+      # default returns empty
+      if @woeid? and not @location?
+        @_getLocationWoeid(@woeid)
+      else if not @woeid? and not @location?
+        @_getLocationUser()
+      else if @location? and not @woeid?
+        @_getLocationWoeid('44418')
 
     _getLocationWoeid: (woeid)->
       request({ uri:"#{ @cst.apiUrl }/#{ woeid }/", json: true })
