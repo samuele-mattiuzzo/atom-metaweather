@@ -1,3 +1,7 @@
+## [0.6.1](https://github.com/samuele-mattiuzzo/atom-metaweather/tree/v0.6.1) - Fixes new settings bug
+* Recently added settings wouldn't apply unless refresh. Added watchers for them
+* Updated README
+
 ## [0.6.0](https://github.com/samuele-mattiuzzo/atom-metaweather/tree/v0.6.0) - Adds auto location fetching
 * Allows to automatically fetch both `woeid` and `location` for the user using the `navigator` object
 
