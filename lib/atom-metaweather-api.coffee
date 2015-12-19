@@ -16,7 +16,7 @@ class API
     updateTime = null
 
 
-    constructor: (woeid, location, bothDays, todayUrl, tomorrowUrl, updateTime)->
+    constructor: (woeid, location, bothDays, updateTime, todayUrl, tomorrowUrl)->
       @cst = new Const()
       @woeid = woeid
       @location = location
@@ -36,7 +36,7 @@ class API
       if @lastChecked?
         now = new Date()
         # diff in minutes
-        diff = Math.abs(now.getTime() - @lastChecked.getTime()) / 60 * @cst.SEC
+        diff = Math.abs(now.getTime() - @lastChecked.getTime()) / (60 * @cst.SEC)
         diff >= @updateTime
       else
         true

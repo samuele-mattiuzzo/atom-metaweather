@@ -81,7 +81,8 @@ class Format
       wind = @_formatWind()
       humidity = @_formatHumidity()
       predict = @_formatPredictability()
-      result = "#{ temperature}#{ icon }#{ humidity }#{ wind }#{ predict }"
+      lastUp = @obj.api.lastChecked.toTimeString()
+      result = "#{ temperature}#{ icon }#{ humidity }#{ wind }#{ predict } #{ lastUp }"
       "#{ tagOpen }#{ result }#{ tagClose }"
     else
       "#{ tagOpen }-#{ tagClose }"

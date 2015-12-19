@@ -69,11 +69,12 @@ class MetaweatherView extends HTMLElement
 
   _createApi: ->
     # creates the api object without resolving it
+    updateTime = if @updateTime? then @updateTime else null
     @api = new API(
       @locationWoeid,
       @locationName,
       @cycleDates,
-      @updateTime,
+      updateTime,
       "#{ @cst.apiUrl }/#{ @locationWoeid }/#{ @todayDate }/",
       "#{ @cst.apiUrl }/#{ @locationWoeid }/#{ @tomorrowDate }/"
     )
