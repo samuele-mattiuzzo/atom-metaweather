@@ -73,6 +73,7 @@ class MetaweatherView extends HTMLElement
       @locationWoeid,
       @locationName,
       @cycleDates,
+      @updateTime,
       "#{ @cst.apiUrl }/#{ @locationWoeid }/#{ @todayDate }/",
       "#{ @cst.apiUrl }/#{ @locationWoeid }/#{ @tomorrowDate }/"
     )

@@ -13,15 +13,17 @@ class API
     todayData = null
     tomorrowData = null
     lastChecked = null
+    updateTime = null
 
 
-    constructor: (woeid, location, bothDays, todayUrl, tomorrowUrl)->
+    constructor: (woeid, location, bothDays, todayUrl, tomorrowUrl, updateTime)->
       @cst = new Const()
       @woeid = woeid
       @location = location
       @bothDays = bothDays
       @todayUrl = todayUrl
       @tomorrowUrl = tomorrowUrl
+      @updateTime = updateTime
 
     # Data fetch methods
     refresh: ->
@@ -33,8 +35,9 @@ class API
     timeToRefresh: ->
       if @lastChecked?
         now = new Date()
-        diff = Math.abs(now - @lastChecked) / 36e5
-        diff >= 1
+        # diff in minutes
+        diff = Math.abs(now.getTime() - @lastChecked.getTime()) / 60 * @cst.SEC
+        diff >= @updateTime
       else
         true
 
