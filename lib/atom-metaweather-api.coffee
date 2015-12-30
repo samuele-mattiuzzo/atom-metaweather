@@ -13,28 +13,30 @@ class API
     todayData = null
     tomorrowData = null
     lastChecked = null
+    updateTime = null
 
 
-    constructor: (woeid, location, bothDays, todayUrl, tomorrowUrl)->
+    constructor: (woeid, location, bothDays, updateTime, todayUrl, tomorrowUrl)->
       @cst = new Const()
       @woeid = woeid
       @location = location
       @bothDays = bothDays
       @todayUrl = todayUrl
       @tomorrowUrl = tomorrowUrl
+      @updateTime = updateTime
 
     # Data fetch methods
     refresh: ->
       if @timeToRefresh()
-        [todayData, tomorowData] = [null, null]
         @setLocation()
         @setApiData()
 
     timeToRefresh: ->
       if @lastChecked?
         now = new Date()
-        diff = Math.abs(now - @lastChecked) / 36e5
-        diff >= 1
+        # diff in minutes or day has changed
+        diff = Math.abs(now.getTime() - @lastChecked.getTime()) / (60 * @cst.SEC)
+        (diff >= @updateTime) or (@lastChecked.getDay() != now.getDay())
       else
         true
 

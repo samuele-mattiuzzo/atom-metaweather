@@ -21,25 +21,22 @@ describe "Metaweather", ->
       atom.config.set('atom-metaweather.location', 44418)
       settings = ['showTemperature', 'showHumidity', 'showWind']
       for index in settings
-          atom.config.set("atom-metaweather.#{ settings[index] }", true)
+        atom.config.set("atom-metaweather.#{ settings[index] }", true)
       atom.packages.emitter.emit('did-activate-all')
 
       weather = Metaweather.view
-      spyOn(weather.api, 'timeToRefresh').andCallFake ->
-        true
-      spyOn(weather.api, 'setLocation').andCallFake ->
-        weather.api.woeid = 44418
-        weather.api.location = 'London'
-      spyOn(weather.api, 'setApiData').andCallFake ->
-        weather.api.todayData = [{
-            "weather_state_name": "Heavy Cloud",
-            "weather_state_abbr": "hc",
-            "wind_direction_compass": "SW",
-            "the_temp": 12.265000000000001,
-            "wind_speed": 24.026236683333334,
-            "humidity": 72,
-            "predictability": 71}]
-        weather.api.tomorrowData = weather.api.todayData
+      weather.api.woeid = 44418
+      weather.api.location = 'London'
+      weather.api.lastChecked = new Date()
+      weather.api.todayData = [{
+        "weather_state_name": "Heavy Cloud",
+        "weather_state_abbr": "hc",
+        "wind_direction_compass": "SW",
+        "the_temp": 12.265000000000001,
+        "wind_speed": 24.026236683333334,
+        "humidity": 72,
+        "predictability": 71}]
+      weather.api.tomorrowData = weather.api.todayData
 
   describe '::initialize', ->
     it 'displays in the status bar', ->

@@ -84,7 +84,7 @@ class Format
       result = "#{ temperature}#{ icon }#{ humidity }#{ wind }#{ predict }"
       "#{ tagOpen }#{ result }#{ tagClose }"
     else
-      "#{ tagOpen }-#{ tagClose }"
+      "#{ tagOpen }updating#{ tagClose }"
 
   get: ->
     pre = @_formatPre()
