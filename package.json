@@ -2,7 +2,7 @@
   "name": "atom-metaweather",
   "main": "./lib/atom-metaweather",
   "author": "Samuele Mattiuzzo <samumatt@gmail.com>",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "description": "Atom Metaweather is a status bar plugin for Atom editor. Displays weather information for today and tomorrow using https://www.metaweather.com's API data.",
   "keywords": [
     "weather",
