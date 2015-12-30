@@ -1,3 +1,6 @@
+## [0.7.0](https://github.com/samuele-mattiuzzo/atom-metaweather/tree/v0.7.0) - Improves refresh of the API
+* Improves slightly the api refresh logic and allows for proper change if the day changes
+
 ## [0.6.1](https://github.com/samuele-mattiuzzo/atom-metaweather/tree/v0.6.1) - Fixes new settings bug
 * Recently added settings wouldn't apply unless refresh. Added watchers for them
 * Updated README
