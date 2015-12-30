@@ -28,16 +28,15 @@ class API
     # Data fetch methods
     refresh: ->
       if @timeToRefresh()
-        [todayData, tomorowData] = [null, null]
         @setLocation()
         @setApiData()
 
     timeToRefresh: ->
       if @lastChecked?
         now = new Date()
-        # diff in minutes
+        # diff in minutes or day has changed
         diff = Math.abs(now.getTime() - @lastChecked.getTime()) / (60 * @cst.SEC)
-        diff >= @updateTime
+        (diff >= @updateTime) or (@lastChecked.getDay() != now.getDay())
       else
         true
 
